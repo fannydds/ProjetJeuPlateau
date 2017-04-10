@@ -10,5 +10,6 @@ package lib.jeuplateau.modele;
  * @author Epulapp
  */
 public enum Rotation {
-    
+    Droite,
+    Gauche
 }
