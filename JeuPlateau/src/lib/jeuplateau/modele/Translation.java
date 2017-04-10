@@ -10,5 +10,8 @@ package lib.jeuplateau.modele;
  * @author Epulapp
  */
 public enum Translation {
-    
+    Bas,
+    Haut,
+    Gauche,
+    Droite
 }
