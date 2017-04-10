@@ -9,6 +9,27 @@ package lib.jeuplateau.modele;
  *
  * @author Epulapp
  */
-public class Piece {
+public class Piece 
+{
+    Case[][] tableauCase;
+    
+    public Piece(int x, int y)
+    {
+        this.tableauCase = new Case[x][y];
+        
+    }
+    
+    public boolean rotation(Rotation rot)
+    {
+        
+        return true;
+    }
+    
+    public boolean translate(Translation trans)
+    {
+         return true; 
+    }
+    
+    
     
 }
