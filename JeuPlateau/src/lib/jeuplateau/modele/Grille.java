@@ -11,4 +11,13 @@ package lib.jeuplateau.modele;
  */
 public class Grille {
     
+    Case[][] tableauCase;
+
+    public Grille(int l, int c) {
+        this.tableauCase = new Case[l][c];
+    }
+    
+    
+    
+    
 }
