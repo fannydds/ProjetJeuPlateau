@@ -30,6 +30,9 @@ public class GrilleJeuController implements Initializable {
     @FXML
     private GridPane grilleGridPane;
     
+    private int numCols;
+    private int numRows;
+    
     @FXML
     private void handleButtonAction(ActionEvent event) {
         System.out.println("You clicked me!");
@@ -37,12 +40,12 @@ public class GrilleJeuController implements Initializable {
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        initGrilleGridPane();
+        //initGrilleGridPane();
     }   
     
-    private void initGrilleGridPane(){
-        final int numCols = 20 ;
-        final int numRows = 20;
+    private void initGrilleGridPane(int col, int row){
+        numCols = col;
+        numRows = row;
         grilleGridPane.getRowConstraints().clear();
         grilleGridPane.getColumnConstraints().clear();
         for (int i = 0; i < numCols; i++) {

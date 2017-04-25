@@ -21,13 +21,63 @@ public class Piece
     
     public boolean rotation(Rotation rot)
     {
-        
+        switch(rot){
+            case Droite :
+                traitementRotationDroite();
+                break;
+            case Gauche:
+                traitementRotationGauche();
+                break;
+            default :
+                return false;
+        }
         return true;
     }
     
     public boolean translate(Translation trans)
     {
-         return true; 
+        switch(trans){
+            case Bas :
+                traitementTranslationBas();
+                break;
+            case Haut :
+                traitementTranslationHaut();
+                break;
+            case Gauche:
+                traitementTranslationGauche();
+                break;
+            case Droite:
+                traitementTranslationDroite();
+                break;
+            default :
+                return false;
+                
+        }
+        return true; 
+    }
+    
+    private void traitementTranslationBas(){
+        
+    }
+
+    private void traitementTranslationHaut() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    private void traitementTranslationGauche() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    private void traitementTranslationDroite() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    private void traitementRotationDroite() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    private void traitementRotationGauche() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
     

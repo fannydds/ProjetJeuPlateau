@@ -17,10 +17,20 @@ import javafx.stage.Stage;
  */
 public class JeuPlateau extends Application {
     
+    Grille grilleModele;
+    GrilleJeuController controller;
+    int col = 20;
+    int row = 20;
+    
     @Override
     public void start(Stage stage) throws Exception {
-        Parent root = FXMLLoader.load(getClass().getResource("/lib/jeuplateau/vue/GrilleJeuVue.fxml"));
+        grilleModele = new Grille(col, row);
         
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(getClass().getResource("/lib/jeuplateau/vue/GrilleJeuVue.fxml"));
+        controller = loader.getController();
+       
+        Parent root = FXMLLoader.load(getClass().getResource("/lib/jeuplateau/vue/GrilleJeuVue.fxml"));
         Scene scene = new Scene(root);
         
         stage.setScene(scene);
