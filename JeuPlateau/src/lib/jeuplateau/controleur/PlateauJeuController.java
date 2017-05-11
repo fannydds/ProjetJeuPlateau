@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package tetris.controleur;
+package lib.jeuplateau.controleur;
 
 import lib.jeuplateau.modele.*;
 import java.net.URL;

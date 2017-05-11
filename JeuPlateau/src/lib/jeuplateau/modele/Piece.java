@@ -58,6 +58,7 @@ public class Piece
     
     private void traitementTranslationBas(){
         
+        
     }
 
     private void traitementTranslationHaut() {
@@ -79,6 +80,8 @@ public class Piece
     private void traitementRotationGauche() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
+    
+    
     
     
     
