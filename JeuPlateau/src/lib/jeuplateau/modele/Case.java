@@ -9,7 +9,7 @@ package lib.jeuplateau.modele;
  *
  * @author Epulapp
  */
-public class Case {
+public class Case implements Cloneable {
     
     private int posX;
     
@@ -45,6 +45,11 @@ public class Case {
 
     public void setBusy(boolean busy) {
         this.busy = busy;
+    }
+
+    @Override
+    protected Case clone() throws CloneNotSupportedException {
+        return (Case) super.clone(); //To change body of generated methods, choose Tools | Templates.
     }
     
     
