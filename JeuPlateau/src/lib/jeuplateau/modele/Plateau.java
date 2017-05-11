@@ -25,6 +25,10 @@ public class Plateau {
         this.grille = new Grille(this.row, this.col);
         
     }
+
+    public Grille getGrille() {
+        return grille;
+    }
     
     
     

@@ -18,7 +18,6 @@ import lib.jeuplateau.controleur.PlateauJeuController;
  */
 public class JeuPlateau extends Application {
     
-    Plateau plateau;
     PlateauJeuController controller;
     
     private int col;
@@ -29,8 +28,6 @@ public class JeuPlateau extends Application {
         
         col = 10;
         row = 10;
-                
-        plateau = new Plateau(col, row);
         
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/lib/jeuplateau/vue/GrilleJeuVue.fxml"));
         Parent root = loader.load();

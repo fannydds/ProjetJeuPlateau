@@ -8,9 +8,11 @@ package lib.jeuplateau.controleur;
 import lib.jeuplateau.modele.*;
 import java.net.URL;
 import java.util.ResourceBundle;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.ColumnConstraints;
@@ -30,10 +32,11 @@ public class PlateauJeuController implements Initializable {
     private int numCols;
     private int numRows;
     
-    @FXML
-    private void handleButtonAction(ActionEvent event) {
-        System.out.println("You clicked me!");
-    }
+    Plateau plateau;
+    
+    Button btStart;
+    
+
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -71,8 +74,42 @@ public class PlateauJeuController implements Initializable {
                 grilleGridPane.add(ap, i, j);
             }
         }
+        
+        this.plateau = new Plateau(col, row);
     }
     
+    @FXML
+    private void handlerOnActionButtonStart(ActionEvent event) {
+        
+        Piece p  = new Piece(numCols, numRows);
+        System.out.println(".handlerOnActionButtonStart() " + p.getTableauCase());
+        p.getTableauCase()[0][0].setBusy(true);
+        p.getTableauCase()[0][1].setBusy(true);
+        plateau.getGrille().setPieceCourante(p);
+        
+         for (int i = 0; i < numCols; i++) {
+            for (int j = 0; j < numRows; j++) {
+                Label r = new Label();
+                if(plateau.getGrille().getPieceCourante().getTableauCase()[i][j].isBusy()){
+                    r.setStyle("-fx-background-color: red;");
+                }else{
+                    r.setStyle("-fx-background-color: black;");
+                }
+                
+                AnchorPane ap = new AnchorPane();
+                
+                AnchorPane.setTopAnchor(r, 0.5);
+                AnchorPane.setLeftAnchor(r, 0.5);
+                AnchorPane.setRightAnchor(r, 0.5);
+                AnchorPane.setBottomAnchor(r, 0.5);
+                ap.getChildren().add(r);
+                grilleGridPane.add(ap, i, j);
+                
+            }
+        }
+        
+        
+    }
     
     
 }

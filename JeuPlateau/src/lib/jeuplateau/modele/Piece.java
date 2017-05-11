@@ -100,6 +100,11 @@ public class Piece  implements Cloneable
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
+    public Case[][] getTableauCase() {
+        return tableauCase;
+    }
+    
+
     @Override
     protected Piece clone() throws CloneNotSupportedException {
         Piece Copie = (Piece) super.clone();
