@@ -11,4 +11,9 @@ package lib.jeuplateau.modele;
  */
 public class Plateau {
     
+    private Grille grille;
+
+    public Plateau() {
+    }
+    
 }

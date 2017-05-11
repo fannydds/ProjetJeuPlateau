@@ -14,10 +14,13 @@ public class Case {
     private int posX;
     
     private int posY;
+    
+    private boolean busy;
 
     public Case(int x, int y) {
         this.posX = x;
         this.posY = y;
+        this.busy = false;
     }
 
     public int getPosX() {
@@ -35,6 +38,15 @@ public class Case {
     public void setPosY(int posY) {
         this.posY = posY;
     }
+
+    public boolean isBusy() {
+        return busy;
+    }
+
+    public void setBusy(boolean busy) {
+        this.busy = busy;
+    }
+    
     
     
     

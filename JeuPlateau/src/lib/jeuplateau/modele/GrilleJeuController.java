@@ -12,14 +12,10 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.Border;
 import javafx.scene.layout.ColumnConstraints;
 
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.RowConstraints;
-import javafx.scene.paint.Color;
-import javafx.scene.shape.Rectangle;
-import javafx.scene.shape.RectangleBuilder;
 
 /**
  *
@@ -51,10 +47,6 @@ public class GrilleJeuController implements Initializable {
             ColumnConstraints colConst = new ColumnConstraints();
             colConst.setPercentWidth(100.0 / numCols);
             grilleGridPane.getColumnConstraints().add(colConst);
-//            Rectangle r = new Rectangle();
-//            r.autosize();
-//            r.setFill(Color.CHARTREUSE);
-//            grilleGridPane.add(r, i, 0);
         }
         for (int i = 0; i < numRows; i++) {
             RowConstraints rowConst = new RowConstraints();
@@ -79,5 +71,7 @@ public class GrilleJeuController implements Initializable {
             }
         }
     }
+    
+    
     
 }

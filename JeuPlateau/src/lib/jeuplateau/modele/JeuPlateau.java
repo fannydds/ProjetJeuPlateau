@@ -42,6 +42,8 @@ public class JeuPlateau extends Application {
         stage.show();
         
         
+        
+        
     }
 
     /**
