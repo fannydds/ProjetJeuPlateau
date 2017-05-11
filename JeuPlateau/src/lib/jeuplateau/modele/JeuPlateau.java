@@ -19,22 +19,29 @@ public class JeuPlateau extends Application {
     
     Grille grilleModele;
     GrilleJeuController controller;
-    int col = 20;
-    int row = 20;
+    private int col;
+    private int row;
     
     @Override
     public void start(Stage stage) throws Exception {
+        
+        col = 10;
+        row = 10;
+                
         grilleModele = new Grille(col, row);
         
-        FXMLLoader loader = new FXMLLoader();
-        loader.setLocation(getClass().getResource("/lib/jeuplateau/vue/GrilleJeuVue.fxml"));
-        controller = loader.getController();
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/lib/jeuplateau/vue/GrilleJeuVue.fxml"));
+        Parent root = loader.load();
+        controller =  loader.getController();
        
-        Parent root = FXMLLoader.load(getClass().getResource("/lib/jeuplateau/vue/GrilleJeuVue.fxml"));
         Scene scene = new Scene(root);
-        
         stage.setScene(scene);
+        
+        controller.initGrilleGridPane(col, row);
+        
         stage.show();
+        
+        
     }
 
     /**
