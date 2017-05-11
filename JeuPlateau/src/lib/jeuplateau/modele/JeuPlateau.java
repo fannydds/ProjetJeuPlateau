@@ -10,6 +10,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import tetris.controleur.PlateauJeuController;
 
 /**
  *
@@ -17,8 +18,9 @@ import javafx.stage.Stage;
  */
 public class JeuPlateau extends Application {
     
-    Grille grilleModele;
-    GrilleJeuController controller;
+    Plateau plateau;
+    PlateauJeuController controller;
+    
     private int col;
     private int row;
     
@@ -28,7 +30,7 @@ public class JeuPlateau extends Application {
         col = 10;
         row = 10;
                 
-        grilleModele = new Grille(col, row);
+        plateau = new Plateau(col, row);
         
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/lib/jeuplateau/vue/GrilleJeuVue.fxml"));
         Parent root = loader.load();
@@ -39,9 +41,8 @@ public class JeuPlateau extends Application {
         
         controller.initGrilleGridPane(col, row);
         
+        
         stage.show();
-        
-        
         
         
     }

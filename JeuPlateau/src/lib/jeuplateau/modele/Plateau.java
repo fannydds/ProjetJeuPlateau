@@ -12,8 +12,22 @@ package lib.jeuplateau.modele;
 public class Plateau {
     
     private Grille grille;
+    
+    private int col;
+    private int row;
+    
 
-    public Plateau() {
+    public Plateau(int col, int row ) {
+        
+        this.col = col;
+        this.row = row;
+        
+        this.grille = new Grille(this.row, this.col);
+        
     }
+    
+    
+    
+    
     
 }

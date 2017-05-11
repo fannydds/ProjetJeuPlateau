@@ -11,19 +11,28 @@ package lib.jeuplateau.modele;
  */
 public class Grille {
     
-    Case[][] tableauCase;
+    private Case[][] tableauCase;
     
-    Piece pieceCourante;
+    private Piece pieceCourante;
 
     public Grille(int l, int c) {
         this.tableauCase = new Case[l][c];
         
     }
-    
-    public void ajoutPiece(Piece p){
-        this.pieceCourante = p;
-        
+
+    public Piece getPieceCourante() {
+        return pieceCourante;
     }
+
+    public void setPieceCourante(Piece pieceCourante) {
+        this.pieceCourante = pieceCourante;
+    }
+    
+    
+    
+    
+    
+    
     
     
     
