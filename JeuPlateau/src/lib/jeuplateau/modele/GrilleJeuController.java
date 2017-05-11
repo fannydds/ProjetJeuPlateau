@@ -40,10 +40,9 @@ public class GrilleJeuController implements Initializable {
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        //initGrilleGridPane();
     }   
     
-    private void initGrilleGridPane(int col, int row){
+    public void initGrilleGridPane(int col, int row){
         numCols = col;
         numRows = row;
         grilleGridPane.getRowConstraints().clear();
@@ -71,10 +70,10 @@ public class GrilleJeuController implements Initializable {
                 r.setStyle("-fx-background-color: black;");
                 AnchorPane ap = new AnchorPane();
                 
-                ap.setTopAnchor(r, 0.5);
-                ap.setLeftAnchor(r, 0.5);
-                ap.setRightAnchor(r, 0.5);
-                ap.setBottomAnchor(r, 0.5);
+                AnchorPane.setTopAnchor(r, 0.5);
+                AnchorPane.setLeftAnchor(r, 0.5);
+                AnchorPane.setRightAnchor(r, 0.5);
+                AnchorPane.setBottomAnchor(r, 0.5);
                 ap.getChildren().add(r);
                 grilleGridPane.add(ap, i, j);
             }
