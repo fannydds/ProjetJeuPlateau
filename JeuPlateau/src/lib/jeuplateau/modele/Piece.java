@@ -23,7 +23,11 @@ public class Piece  implements Cloneable
         this.x = x;
         this.y = y;
         this.tableauCase = new Case[x][y];
-        
+        for (int i = 0; i < x; i++) {
+            for (int j = 0; j < y; j++) {
+               this.tableauCase[i][j] = new Case(i,j) ;
+            }
+        }
     }
     
     public boolean rotation(Rotation rot)

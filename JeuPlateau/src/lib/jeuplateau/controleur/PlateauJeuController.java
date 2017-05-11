@@ -82,9 +82,11 @@ public class PlateauJeuController implements Initializable {
     private void handlerOnActionButtonStart(ActionEvent event) {
         
         Piece p  = new Piece(numCols, numRows);
-        System.out.println(".handlerOnActionButtonStart() " + p.getTableauCase());
+        Case[][] truc = p.getTableauCase();
+        System.out.println(".handlerOnActionButtonStart() " + truc);
         p.getTableauCase()[0][0].setBusy(true);
         p.getTableauCase()[0][1].setBusy(true);
+          Case[][] truc2 = p.getTableauCase();
         plateau.getGrille().setPieceCourante(p);
         
          for (int i = 0; i < numCols; i++) {
