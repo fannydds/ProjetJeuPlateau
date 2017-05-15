@@ -6,7 +6,6 @@
 package lib.jeuplateau.controleur;
 
 import java.awt.Color;
-import java.awt.event.KeyEvent;
 import lib.jeuplateau.modele.*;
 import java.net.URL;
 import java.util.List;
@@ -18,6 +17,8 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.ColumnConstraints;
 
@@ -141,7 +142,7 @@ public class PlateauJeuController implements Initializable {
     }
     
     
-     @FXML
+    @FXML
     private void handlerOnActionButtonDown(ActionEvent event) throws CloneNotSupportedException 
     {
         Piece pcourante = plateau.getGrille().getPieceCourante();
@@ -149,24 +150,25 @@ public class PlateauJeuController implements Initializable {
         draw();
     }
     
+    @FXML
     public void keyPressed(KeyEvent e) throws CloneNotSupportedException {
-        int keyCode = e.getKeyCode();
+        KeyCode keyCode = e.getCode();
         Piece pcourante = plateau.getGrille().getPieceCourante();
 
          switch( keyCode ) { 
-            case KeyEvent.VK_UP:
+            case UP:
                 pcourante.translate(Translation.Haut);
                 draw();
                 break;
-            case KeyEvent.VK_DOWN:
+            case DOWN:
                 pcourante.translate(Translation.Bas);
                 draw();
                 break;
-            case KeyEvent.VK_LEFT:
+            case LEFT:
                 pcourante.translate(Translation.Gauche);
                 draw();
                 break;
-            case KeyEvent.VK_RIGHT :
+            case RIGHT :
                 pcourante.translate(Translation.Droite);
                 draw();
                 break;

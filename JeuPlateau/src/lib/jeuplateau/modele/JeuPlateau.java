@@ -5,10 +5,14 @@
  */
 package lib.jeuplateau.modele;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.application.Application;
+import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 import lib.jeuplateau.controleur.PlateauJeuController;
 
@@ -36,7 +40,20 @@ public class JeuPlateau extends Application {
         Scene scene = new Scene(root);
         stage.setScene(scene);
         
+        scene.setOnKeyPressed(new EventHandler<KeyEvent>() {
+            @Override
+            public void handle(KeyEvent event) {
+                try {
+                    controller.keyPressed(event);
+                } catch (CloneNotSupportedException ex) {
+                    Logger.getLogger(JeuPlateau.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+            
+        });
+        
         controller.initGrilleGridPane(col, row);
+        
         
         
         stage.show();
