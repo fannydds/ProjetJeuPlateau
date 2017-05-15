@@ -5,8 +5,12 @@
  */
 package lib.jeuplateau.controleur;
 
+import java.awt.Color;
+import java.awt.event.KeyEvent;
 import lib.jeuplateau.modele.*;
 import java.net.URL;
+import java.util.List;
+import java.util.Random;
 import java.util.ResourceBundle;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
@@ -76,42 +80,96 @@ public class PlateauJeuController implements Initializable {
         }
         
         this.plateau = new Plateau(col, row);
+        
     }
     
-    @FXML
-    private void handlerOnActionButtonStart(ActionEvent event) {
-        
-        Piece p  = new Piece(numCols, numRows);
-        Case[][] truc = p.getTableauCase();
-        System.out.println(".handlerOnActionButtonStart() " + truc);
-        p.getTableauCase()[0][0].setBusy(true);
-        p.getTableauCase()[0][1].setBusy(true);
-          Case[][] truc2 = p.getTableauCase();
-        plateau.getGrille().setPieceCourante(p);
-        
-         for (int i = 0; i < numCols; i++) {
-            for (int j = 0; j < numRows; j++) {
+    private void draw(){
+         // On parcours le plateau et on colore les cases occupees
+        for (int i = 0; i < numCols; i++) 
+        {
+            for (int j = 0; j < numRows; j++) 
+            {
+                Position posCase = new Position(j,i);
                 Label r = new Label();
-                if(plateau.getGrille().getPieceCourante().getTableauCase()[i][j].isBusy()){
-                    r.setStyle("-fx-background-color: red;");
-                }else{
+                List<Piece> pList = plateau.getGrille().getPiecesSurGrille();
+                Piece pcourante = plateau.getGrille().getPieceCourante();
+                
+                if(pList != null)
+                {
                     r.setStyle("-fx-background-color: black;");
+                   
+                    for (Piece piece : pList)
+                    {
+                        
+                        for (int k = 0; k < piece.getTableauCaseBusy().length; k++) 
+                        {
+                            if(piece.getTableauCaseBusy()[k].getX() == j && piece.getTableauCaseBusy()[k].getY()==i)
+                            {
+//                                r.setStyle("-fx-background-color: "+piece.getColor()+";");
+                                r.setStyle("-fx-background-color: yellow;");
+                            }
+                        }
+                        
+                    }
                 }
-                
+                if(pcourante != null)
+                {
+                    Position[] pos = pcourante.getTableauCaseBusy();
+                    for (Position po : pos) {
+                        if(po.getX() == j && po.getY()==i)
+                            r.setStyle("-fx-background-color: red;");
+                    }
+                    
+                }
                 AnchorPane ap = new AnchorPane();
-                
                 AnchorPane.setTopAnchor(r, 0.5);
                 AnchorPane.setLeftAnchor(r, 0.5);
                 AnchorPane.setRightAnchor(r, 0.5);
                 AnchorPane.setBottomAnchor(r, 0.5);
                 ap.getChildren().add(r);
+               
                 grilleGridPane.add(ap, i, j);
-                
             }
         }
+    }
+    @FXML
+    private void handlerOnActionButtonStart(ActionEvent event) 
+    {
+       draw();
         
         
     }
     
     
+     @FXML
+    private void handlerOnActionButtonDown(ActionEvent event) throws CloneNotSupportedException 
+    {
+        Piece pcourante = plateau.getGrille().getPieceCourante();
+        pcourante.translate(Translation.Bas);
+        draw();
+    }
+    
+    public void keyPressed(KeyEvent e) throws CloneNotSupportedException {
+        int keyCode = e.getKeyCode();
+        Piece pcourante = plateau.getGrille().getPieceCourante();
+
+         switch( keyCode ) { 
+            case KeyEvent.VK_UP:
+                pcourante.translate(Translation.Haut);
+                draw();
+                break;
+            case KeyEvent.VK_DOWN:
+                pcourante.translate(Translation.Bas);
+                draw();
+                break;
+            case KeyEvent.VK_LEFT:
+                pcourante.translate(Translation.Gauche);
+                draw();
+                break;
+            case KeyEvent.VK_RIGHT :
+                pcourante.translate(Translation.Droite);
+                draw();
+                break;
+        }
+    } 
 }
