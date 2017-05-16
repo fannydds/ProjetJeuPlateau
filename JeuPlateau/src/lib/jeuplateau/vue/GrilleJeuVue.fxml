@@ -27,7 +27,7 @@
          <left>
             <VBox prefHeight="682.0" prefWidth="150.0" BorderPane.alignment="CENTER">
                <children>
-                  <Button fx:id="btStart" mnemonicParsing="false" onAction="#handlerOnActionButtonStart" text="Start" />
+                  <!--<Button fx:id="btStart" mnemonicParsing="false" onAction="#handlerOnActionButtonStart" text="Start" />-->
                   <Button fx:id="btDown" mnemonicParsing="false" onAction="#handlerOnActionButtonDown" text="Down" />
                </children></VBox>
          </left>

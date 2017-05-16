@@ -6,6 +6,7 @@
 package lib.jeuplateau.modele;
 
 import java.util.List;
+import javafx.scene.paint.Color;
 
 /**
  * Represente la grille ou les pieces vont bouger
@@ -19,48 +20,49 @@ public class Grille {
     // La taille du tableau de cases
     private int largeur;
     private int hauteur;
-   
-    //Represente l ensemble des pieces deja posees sur la grille
-    private List<Piece> piecesSurGrille;
-    
-    // La nouvelle piece a poser
-    private Piece pieceCourante;
 
     public Grille(int x, int y) {
+        this.largeur = x;
+        this.hauteur = y;
+        
         this.tableauCase = new Case[x][y];
-          for (int i = 0; i < x; i++) {
-            for (int j = 0; j < y; j++) {
-               this.tableauCase[i][j] = new Case(i,j) ;
+        
+        this.tableauCase[9][9]=new Case(Color.RED);
+    }
+
+    public Case[][] getTableauCase() {
+        return tableauCase;
+    }
+
+    public void setTableauCase(Case[][] tableauCase) {
+        this.tableauCase = tableauCase;
+    }
+
+    public int getLargeur() {
+        return largeur;
+    }
+
+    public void setLargeur(int largeur) {
+        this.largeur = largeur;
+    }
+
+    public int getHauteur() {
+        return hauteur;
+    }
+
+    public void setHauteur(int hauteur) {
+        this.hauteur = hauteur;
+    }
+ 
+    public void ajoutPiece(Piece p)
+    {
+        Case[][] tabCasePiece = p.getTableauCases();
+        for (int i = 0; i < tabCasePiece.length; i++) 
+        {
+            for (int j = 0; j < tabCasePiece[0].length; j++) 
+            {
+                this.tableauCase[p.getPositionPiece().getX()+i][p.getPositionPiece().getY()+j] = p.getTableauCases()[i][j];
             }
         }
-        
     }
-
-    public Piece getPieceCourante() {
-        return pieceCourante;
-    }
-
-    public void setPieceCourante(Piece pieceCourante) {
-        this.pieceCourante = pieceCourante;
-    }
-
-    public List<Piece> getPiecesSurGrille() {
-        return piecesSurGrille;
-    }
-
-    public void setPiecesSurGrille(List<Piece> piecesSurGrille) {
-        this.piecesSurGrille = piecesSurGrille;
-    }
-    
-
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
 }

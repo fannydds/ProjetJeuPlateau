@@ -19,50 +19,39 @@ public class Plateau {
     private int col;
     private int row;
     
+    private Piece pieceCourante;
 
-    public Plateau(int col, int row ) {
-        
+    public void setPieceCourante(Piece pieceCourante) {
+        this.pieceCourante = pieceCourante;
+    }
+
+    public Plateau( int col, int row) {
         this.col = col;
         this.row = row;
-        
         this.grille = new Grille(this.row, this.col);
-        
-        
-         //La piece a poser
-        Position[] pos = new Position[3];
-        pos[0] = new Position(2,0);
-        pos[1] = new Position(3,0);
-        pos[2] = new Position(2,1);
-        
-        Piece p  = new Piece(pos);
-
-        //liste des pieces deja sur le plateau
-        Position[] pos2 = new Position[3];
-        pos2[0] = new Position(0,0);
-        pos2[1] = new Position(1,0);
-        pos2[2] = new Position(2,1);
-        Piece pDejaPosee  = new Piece(pos2);
-        Position[] pos3 =new Position[3];
-        pos3[0] = new Position(3,0);
-        pos3[1] = new Position(3,1);
-        pos3[2] = new Position(3,2);
-        Piece pDejaPosee2  = new Piece(pos3);
-        
-        List<Piece> lip =  new ArrayList<Piece>();
-        lip.add(pDejaPosee);
-        lip.add(pDejaPosee2);
-        
-        this.grille.setPieceCourante(p);
-        this.grille.setPiecesSurGrille(lip);
-        
     }
 
     public Grille getGrille() {
         return grille;
     }
     
-    
-    
-    
-    
+    public int getCol() {
+        return col;
+    }
+
+    public void setCol(int col) {
+        this.col = col;
+    }
+
+    public int getRow() {
+        return row;
+    }
+
+    public void setRow(int row) {
+        this.row = row;
+    }
+
+    public Piece getPieceCourante() {
+        return pieceCourante;
+    }
 }

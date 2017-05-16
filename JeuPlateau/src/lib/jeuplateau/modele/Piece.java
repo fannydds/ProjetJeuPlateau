@@ -5,6 +5,7 @@
  */
 package lib.jeuplateau.modele;
 
+import java.util.Arrays;
 import java.util.Random;
 import jdk.nashorn.internal.objects.NativeArray;
 
@@ -15,115 +16,47 @@ import jdk.nashorn.internal.objects.NativeArray;
 public class Piece  implements Cloneable  
 {
     //tableau contenant les positions absolues occupees
-    private Position[] tableauCaseBusy;
+    private Case[][] tableauCases;
 
-    private String color;
+    //position de la piece en haut a gauche
+    private Position positionPiece;
     
-    //position de la premiere case en haut a gauche (utilise pour les conflits)
-    private int x;
-    private int y;
     
-    //Represente la largeur et hauteur de la piece (pour les rotations, translations)
-    private int width;
-    private int height;
-    
-    //Matrice de booleens representant les cases occupees et vides (pour la rotation, translation)
-    private boolean[] casesOccupees;
-    
-    //Une piece est composee d un tableau de positions occupees
-    public Piece(Position[] pos)
+    //Une piece est composee d un tableau de cases 
+    public Piece(Case[][] tableauCases, Position positionPiece) 
     {
-        this.tableauCaseBusy = pos;
-       
-        this.x=pos[0].getX();
-        this.y=pos[0].getY();
-        
-        //TODO a calculer avec le tableau de position
-        this.height = pos.length;
-//        this.width = pos[0];
-
-        Random random = new Random();
-        int nextInt = random.nextInt(256*256*256);
-        String colorCode = String.format("#%06x", nextInt);
-        this.color = colorCode;
-        
-
+        this.tableauCases = tableauCases;
+        this.positionPiece = positionPiece;
     }
 
-    public Position[] getTableauCaseBusy() {
-        return tableauCaseBusy;
+//////////////////// Getter Setter //////////////////// 
+    public Case[][] getTableauCases() {
+        return tableauCases;
     }
 
-    public void setTableauCaseBusy(Position[] tableauCaseBusy) {
-        this.tableauCaseBusy = tableauCaseBusy;
+    public void setTableauCases(Case[][] tableauCases) {
+        this.tableauCases = tableauCases;
     }
 
-    public int getX() {
-        return x;
+    public Position getPositionPiece() {
+        return positionPiece;
     }
 
-    public void setX(int x) {
-        this.x = x;
+    public void setPositionPiece(Position positionPiece) {
+        this.positionPiece = positionPiece;
     }
+///////////////////////////////////////////////////////////// 
 
-    public int getY() {
-        return y;
-    }
-
-    public void setY(int y) {
-        this.y = y;
-    }
-
-    public int getWidth() {
-        return width;
-    }
-
-    public void setWidth(int width) {
-        this.width = width;
-    }
-
-    public int getHeight() {
-        return height;
-    }
-
-    public void setHeight(int height) {
-        this.height = height;
-    }
-
-    public boolean[] getCasesOccupees() {
-        return casesOccupees;
-    }
-
-    public void setCasesOccupees(boolean[] casesOccupees) {
-        this.casesOccupees = casesOccupees;
-    }
-
-    public String getColor() {
-        return color;
-    }
-
-
-    
-   
     public boolean rotation(Rotation rot)
     {
-        switch(rot){
-            case Droite :
-                traitementRotationDroite();
-                break;
-            case Gauche:
-                traitementRotationGauche();
-                break;
-            default :
-                return false;
-        }
+//TODO
+        
+        
         return true;
     }
     
     public boolean translate(Translation trans) throws CloneNotSupportedException
     {
-//        this.pieceCopie = this.clone();
-        
         switch(trans){
             case Bas :
                 traitementTranslationBas();
@@ -139,55 +72,85 @@ public class Piece  implements Cloneable
                 break;
             default :
                 return false;
-                
         }
         return true; 
     }
     
     private void traitementTranslationBas(){
-        for (Position case1 : tableauCaseBusy) {
-            case1.setX(case1.getX()+1);
-        }
+//        this.positionPiece.setX(this.positionPiece.getX()+1);
+        this.positionPiece.setY(this.positionPiece.getY()+1);
     }
 
     private void traitementTranslationHaut() {
-        for (Position case1 : tableauCaseBusy) {
-            case1.setX(case1.getX()-1);
-        }
+//        for (Position case1 : tableauCaseBusy) {
+//            case1.setX(case1.getX()-1);
+//        }
     }
 
     private void traitementTranslationGauche() {
-        for (Position case1 : tableauCaseBusy) {
-            case1.setY(case1.getY()-1);
-        }    
+//        for (Position case1 : tableauCaseBusy) {
+//            case1.setY(case1.getY()-1);
+//        }    
     }
 
     private void traitementTranslationDroite() {
-        for (Position case1 : tableauCaseBusy) {
-            case1.setY(case1.getY()+1);
-        } 
+//        for (Position case1 : tableauCaseBusy) {
+//            case1.setY(case1.getY()+1);
+//        } 
     }
-
-    private void traitementRotationDroite() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    private void traitementRotationGauche() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-
-
-//    @Override
-//    protected Piece clone() throws CloneNotSupportedException {
-//        Piece Copie = (Piece) super.clone();
-//        Copie.tableauCase = new Case[this.x][this.y];
+//    
+//    private Position getMaxXY(Position[] tableauPosition)
+//    {
+//        int maxX = tableauCaseBusy[0].getX();
+//        int maxY = tableauCaseBusy[0].getY();
 //        
-//        for (int i = 0; i < this.tableauCase.length; i++) {
-//            System.arraycopy(this.tableauCase[i], 0, Copie.tableauCase[i], 0, this.tableauCase[0].length);
+//        for (Position position : tableauPosition) 
+//        {
+//           if(position.getX()>maxX)
+//               maxX = position.getX();
+//           if(position.getY()>maxY)
+//               maxY = position.getY();
 //        }
-//        return Copie; //To change body of generated methods, choose Tools | Templates.
+//        
+//        Position pos = new Position(maxX,maxY);
+//        return pos;
 //    }
+//    
+//       private Position getMinXY(Position[] tableauPosition)
+//    {
+//        int minX = tableauCaseBusy[0].getX();
+//        int minY = tableauCaseBusy[0].getY();
+//        
+//        for (Position position : tableauPosition) 
+//        {
+//           if(position.getX()<minX)
+//               minX = position.getX();
+//           if(position.getY()<minY)
+//               minY = position.getY();
+//        }
+//        
+//        Position pos = new Position(minX,minY);
+//        return pos;
+//    }
+
+//       private boolean[][] creerMatriceZeros()
+//       {
+//            Position posMin = getMinXY(this.tableauCaseBusy);
+//            Position posMax = getMaxXY(this.tableauCaseBusy);
+//           
+//            boolean[][] tableau = new boolean[posMax.getX()-posMin.getX()+2][posMax.getY()-posMin.getY()+2];
+//            for (int i = posMin.getX(); i <=posMax.getX(); i++) {
+//               for (int j = posMin.getY(); j <= posMax.getY(); j++) {
+//                   tableau[i][j] = false;
+//               }
+//            }
+//           
+//            for (Position case1 : tableauCaseBusy) 
+//            {
+//               tableau[case1.getX()][case1.getY()] = true;
+//            }
+//           return tableau;
+//       }
     
     
     

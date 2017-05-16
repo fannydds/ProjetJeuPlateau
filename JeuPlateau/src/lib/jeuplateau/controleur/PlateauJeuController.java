@@ -12,9 +12,11 @@ import java.util.List;
 import java.util.Random;
 import java.util.ResourceBundle;
 import javafx.application.Platform;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.input.KeyCode;
@@ -24,6 +26,7 @@ import javafx.scene.layout.ColumnConstraints;
 
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.RowConstraints;
+import javafx.scene.shape.Rectangle;
 
 /**
  *
@@ -41,136 +44,101 @@ public class PlateauJeuController implements Initializable {
     
     Button btStart;
     
-
-    
     @Override
-    public void initialize(URL url, ResourceBundle rb) {
-    }   
+    public void initialize(URL url, ResourceBundle rb) {}   
     
-    public void initGrilleGridPane(int col, int row){
+    public void initGrilleGridPane(int col, int row)
+    {
         numCols = col;
         numRows = row;
+        this.plateau = new Plateau(col, row);
+       
+        Position positionPiece = new Position(1,1);
+        Case[][] tabCase = new Case[2][2];
+        tabCase[0][0]=new Case(javafx.scene.paint.Color.BEIGE);
+        tabCase[0][1]=new Case(javafx.scene.paint.Color.BEIGE);
+        tabCase[1][0]=new Case(javafx.scene.paint.Color.BEIGE);
+        tabCase[1][1]=null;
+        Piece p1 = new Piece(tabCase, positionPiece);
+        plateau.getGrille().ajoutPiece(p1);
+        
+        plateau.setPieceCourante(p1);
+
+//        this.grilleGridPane = new grilleGridPane();
         grilleGridPane.getRowConstraints().clear();
         grilleGridPane.getColumnConstraints().clear();
-        for (int i = 0; i < numCols; i++) {
-            ColumnConstraints colConst = new ColumnConstraints();
-            colConst.setPercentWidth(100.0 / numCols);
-            grilleGridPane.getColumnConstraints().add(colConst);
-        }
-        for (int i = 0; i < numRows; i++) {
-            RowConstraints rowConst = new RowConstraints();
-            rowConst.setPercentHeight(100.0 / numRows);
-            grilleGridPane.getRowConstraints().add(rowConst);         
-        }
-        grilleGridPane.setGridLinesVisible(true);
+        
 
         System.out.println(grilleGridPane.getColumnConstraints());
         for (int i = 0; i < numCols; i++) {
             for (int j = 0; j < numRows; j++) {
-                Label r = new Label();
-                r.setStyle("-fx-background-color: black;");
-                AnchorPane ap = new AnchorPane();
+                Rectangle r = new Rectangle();
                 
-                AnchorPane.setTopAnchor(r, 0.5);
-                AnchorPane.setLeftAnchor(r, 0.5);
-                AnchorPane.setRightAnchor(r, 0.5);
-                AnchorPane.setBottomAnchor(r, 0.5);
-                ap.getChildren().add(r);
-                grilleGridPane.add(ap, i, j);
+                if(plateau.getGrille().getTableauCase()[i][j] != null)
+                    r.setFill(plateau.getGrille().getTableauCase()[i][j].getColor());
+                else
+                    r.setFill(javafx.scene.paint.Color.BLACK);
+                
+                r.setWidth(20);
+                r.setHeight(20);
+
+                grilleGridPane.add(r, i, j);
             }
         }
-        
-        this.plateau = new Plateau(col, row);
-        
-    }
-    
-    private void draw(){
-         // On parcours le plateau et on colore les cases occupees
-        for (int i = 0; i < numCols; i++) 
-        {
-            for (int j = 0; j < numRows; j++) 
-            {
-                Position posCase = new Position(j,i);
-                Label r = new Label();
-                List<Piece> pList = plateau.getGrille().getPiecesSurGrille();
-                Piece pcourante = plateau.getGrille().getPieceCourante();
-                
-                if(pList != null)
-                {
-                    r.setStyle("-fx-background-color: black;");
-                   
-                    for (Piece piece : pList)
-                    {
-                        
-                        for (int k = 0; k < piece.getTableauCaseBusy().length; k++) 
-                        {
-                            if(piece.getTableauCaseBusy()[k].getX() == j && piece.getTableauCaseBusy()[k].getY()==i)
-                            {
-//                                r.setStyle("-fx-background-color: "+piece.getColor()+";");
-                                r.setStyle("-fx-background-color: yellow;");
-                            }
-                        }
-                        
-                    }
-                }
-                if(pcourante != null)
-                {
-                    Position[] pos = pcourante.getTableauCaseBusy();
-                    for (Position po : pos) {
-                        if(po.getX() == j && po.getY()==i)
-                            r.setStyle("-fx-background-color: red;");
-                    }
-                    
-                }
-                AnchorPane ap = new AnchorPane();
-                AnchorPane.setTopAnchor(r, 0.5);
-                AnchorPane.setLeftAnchor(r, 0.5);
-                AnchorPane.setRightAnchor(r, 0.5);
-                AnchorPane.setBottomAnchor(r, 0.5);
-                ap.getChildren().add(r);
-               
-                grilleGridPane.add(ap, i, j);
-            }
-        }
-    }
-    @FXML
-    private void handlerOnActionButtonStart(ActionEvent event) 
-    {
-       draw();
-        
-        
-    }
-    
+    }    
     
     @FXML
-    private void handlerOnActionButtonDown(ActionEvent event) throws CloneNotSupportedException 
+    public void handlerOnActionButtonDown(ActionEvent event) throws CloneNotSupportedException 
     {
-        Piece pcourante = plateau.getGrille().getPieceCourante();
+        Piece pcourante = plateau.getPieceCourante();
         pcourante.translate(Translation.Bas);
         draw();
     }
     
+    public void draw(){
+        for (int i = 0; i < numCols; i++) {
+            for (int j = 0; j < numRows; j++) {
+                Rectangle r = (Rectangle) getNodeByRowColumnIndex(i, j, this.grilleGridPane);
+                System.out.println("lib.jeuplateau.controleur.PlateauJeuController.draw()");
+                if(plateau.getGrille().getTableauCase()[i][j] != null)
+                    r.setFill(plateau.getGrille().getTableauCase()[i][j].getColor());
+                else
+                    r.setFill(javafx.scene.paint.Color.BLACK);
+            }
+        }
+    }
+    
+    public Node getNodeByRowColumnIndex (final int row, final int column, GridPane gridPane) {
+    Node result = null;
+    ObservableList<Node> childrens = gridPane.getChildren();
+
+    for (Node node : childrens) {
+        if(gridPane.getRowIndex(node) == row && gridPane.getColumnIndex(node) == column) {
+            result = node;
+            break;
+        }
+    }
+
+    return result;
+    }
     @FXML
     public void keyPressed(KeyEvent e) throws CloneNotSupportedException {
         KeyCode keyCode = e.getCode();
-        Piece pcourante = plateau.getGrille().getPieceCourante();
+        Piece pcourante = plateau.getPieceCourante();
 
-         switch( keyCode ) { 
+         switch( keyCode ) 
+         { 
             case UP:
                 pcourante.translate(Translation.Haut);
-                draw();
                 break;
             case DOWN:
                 pcourante.translate(Translation.Bas);
-                draw();
                 break;
             case LEFT:
                 pcourante.translate(Translation.Gauche);
-                draw();
                 break;
             case RIGHT :
                 pcourante.translate(Translation.Droite);
-                draw();
                 break;
         }
     } 
