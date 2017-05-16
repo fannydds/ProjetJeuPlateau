@@ -113,10 +113,13 @@ public class PlateauJeuController implements Initializable {
     ObservableList<Node> childrens = gridPane.getChildren();
 
     for (Node node : childrens) {
-        if(gridPane.getRowIndex(node) == row && gridPane.getColumnIndex(node) == column) {
-            result = node;
-            break;
+        if(node instanceof Rectangle){
+            if(GridPane.getRowIndex(node) == row && GridPane.getColumnIndex(node) == column) {
+                result = node;
+                break;
+            }
         }
+        
     }
 
     return result;
