@@ -144,8 +144,8 @@ public class Piece  implements Cloneable
 
 	private Case[][] createNewTableauCases() 
         {
-            int col = this.tableauCases.length;
-            int row = this.tableauCases[0].length;
+            int col = this.tableauCases[0].length;
+            int row = this.tableauCases.length;
 		return new Case[col][row];
 	}
 }
