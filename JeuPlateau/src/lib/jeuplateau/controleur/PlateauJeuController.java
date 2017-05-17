@@ -60,7 +60,7 @@ public class PlateauJeuController implements Initializable {
         tabCase[1][0]=new Case(javafx.scene.paint.Color.BEIGE);
         tabCase[1][1]=null;
         Piece p1 = new Piece(tabCase, positionPiece);
-        plateau.getGrille().ajoutPiece(p1);
+        //plateau.getGrille().ajoutPiece(p1);
         
         plateau.setPieceCourante(p1);
 
@@ -98,12 +98,47 @@ public class PlateauJeuController implements Initializable {
     public void draw(){
         for (int i = 0; i < numCols; i++) {
             for (int j = 0; j < numRows; j++) {
+                
                 Rectangle r = (Rectangle) getNodeByRowColumnIndex(i, j, this.grilleGridPane);
                 System.out.println("lib.jeuplateau.controleur.PlateauJeuController.draw()");
                 if(plateau.getGrille().getTableauCase()[i][j] != null)
                     r.setFill(plateau.getGrille().getTableauCase()[i][j].getColor());
                 else
                     r.setFill(javafx.scene.paint.Color.BLACK);
+            }
+        }
+        
+        for (int i = 0; i < numCols; i++) {
+            for (int j = 0; j < numRows; j++) {
+                
+                if(plateau.getPieceCourante().getPositionPiece().getX() == i && plateau.getPieceCourante().getPositionPiece().getY()== j){
+
+                            Piece p = plateau.getPieceCourante();
+                            int li = p.getTableauCases().length;
+                            int c = p.getTableauCases()[0].length; 
+
+                            System.out.println("i = " + i);
+                            System.out.println("j = "+ j);
+
+                            System.out.println("l = " + li);
+                            System.out.println("c = "+ c);
+
+                             for (int k = 0; k < li; k++) {
+                                for (int l = 0; l < c; l++) {
+                                     Rectangle r = (Rectangle) getNodeByRowColumnIndex(i+k, j+l, this.grilleGridPane);
+                                    if(plateau.getPieceCourante().getTableauCases()[k][l] != null){
+                                          System.out.println("");
+
+                                        r.setFill(p.getTableauCases()[k][l].getColor());
+
+                                        System.out.println("k = " + k + "l = " + l);
+                                    }else{
+                                                r.setFill(javafx.scene.paint.Color.BLACK);
+                                                }
+
+                                }
+                            }
+                }
             }
         }
     }
