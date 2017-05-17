@@ -47,11 +47,10 @@ public class Piece  implements Cloneable
     }
 ///////////////////////////////////////////////////////////// 
 
-    public boolean rotation(Rotation rot)
-    {
-//TODO
+    public boolean rotation(){
         
-        
+        this.rotateTableauCasesBy90Degrees();
+
         return true;
     }
     
@@ -91,5 +90,27 @@ this.positionPiece.setY(this.positionPiece.getY()-1);
     private void traitementTranslationDroite() {
         this.positionPiece.setY(this.positionPiece.getY()+1); 
     }
+    
+    private void rotateTableauCasesBy90Degrees() {
+		Case[][] newTabCases = createNewTableauCases();
+               
+		int columns = newTabCases.length;
+		int rows = newTabCases[0].length;
+		
+		for (int j = 0; j < columns; j++) {
+			for (int i = 0, k = rows - 1; i < rows; i++, k--) {
+				newTabCases[j][i] = this.tableauCases[k][j];
+			}
+		}
+		this.tableauCases = newTabCases;
+	}
+
+	private Case[][] createNewTableauCases() {
+            
+            int col = this.tableauCases.length;
+            int row = this.tableauCases[0].length;
+		return new Case[col][row];
+	}
+        
 
 }
