@@ -22,10 +22,14 @@ import lib.jeuplateau.controleur.PlateauJeuController;
  */
 public class JeuPlateau extends Application {
     
-    PlateauJeuController controller;
+    private PlateauJeuController controller;
     
     private int col = 10;
     private int row = 10;
+    
+    private Plateau plateau = new Plateau(col, row);
+    
+   
     
     @Override
     public void start(Stage stage) throws Exception {
@@ -50,7 +54,7 @@ public class JeuPlateau extends Application {
             
         });
         
-        controller.initGrilleGridPane(col, row);
+        controller.initGrilleGridPane(plateau);
         
         
         
@@ -66,6 +70,12 @@ public class JeuPlateau extends Application {
     public void setRow(int row) {
         this.row = row;
     }
+
+    public void setPlateau(Plateau plateau) {
+        this.plateau = plateau;
+    }
+    
+    
     
     
     
