@@ -24,14 +24,12 @@ public class JeuPlateau extends Application {
     
     PlateauJeuController controller;
     
-    private int col;
-    private int row;
+    private int col = 10;
+    private int row = 10;
     
     @Override
     public void start(Stage stage) throws Exception {
         
-        col = 10;
-        row = 10;
         
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/lib/jeuplateau/vue/GrilleJeuVue.fxml"));
         Parent root = loader.load();
@@ -60,6 +58,17 @@ public class JeuPlateau extends Application {
         
         
     }
+
+    public void setCol(int col) {
+        this.col = col;
+    }
+
+    public void setRow(int row) {
+        this.row = row;
+    }
+    
+    
+    
 
     /**
      * @param args the command line arguments
