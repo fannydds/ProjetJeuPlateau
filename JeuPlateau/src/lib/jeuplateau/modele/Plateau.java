@@ -35,6 +35,10 @@ public class Plateau {
         return grille;
     }
     
+    public void setGrille(Grille grille) {
+        this.grille = grille;
+    }
+    
     public int getCol() {
         return col;
     }
