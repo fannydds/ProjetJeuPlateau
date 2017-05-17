@@ -40,28 +40,34 @@ public class PlateauJeuController implements Initializable {
     private int numCols;
     private int numRows;
     
-    Plateau plateau;
+    private Plateau plateau;
     
     Button btStart;
     
     @Override
-    public void initialize(URL url, ResourceBundle rb) {}   
+    public void initialize(URL url, ResourceBundle rb) {} 
+
+    public Plateau getPlateau() {
+        return plateau;
+    }
     
-    public void initGrilleGridPane(int col, int row)
+    
+    
+    public void initGrilleGridPane(Plateau plateau)
     {
-        numCols = col;
-        numRows = row;
-        this.plateau = new Plateau(col, row);
+        numCols = plateau.getCol();
+        numRows = plateau.getRow();
+        this.plateau = plateau;
        
-        Position positionPiece = new Position(1,1);
-        Case[][] tabCase = new Case[2][2];
-        tabCase[0][0]=new Case(javafx.scene.paint.Color.BEIGE);
-        tabCase[0][1]=new Case(javafx.scene.paint.Color.BEIGE);
-        tabCase[1][0]=new Case(javafx.scene.paint.Color.BEIGE);
-        tabCase[1][1]=null;
-        Piece p1 = new Piece(tabCase, positionPiece);
-        
-        plateau.setPieceCourante(p1);
+//        Position positionPiece = new Position(1,1);
+//        Case[][] tabCase = new Case[2][2];
+//        tabCase[0][0]=new Case(javafx.scene.paint.Color.BEIGE);
+//        tabCase[0][1]=new Case(javafx.scene.paint.Color.BEIGE);
+//        tabCase[1][0]=new Case(javafx.scene.paint.Color.BEIGE);
+//        tabCase[1][1]=null;
+//        Piece p1 = new Piece(tabCase, positionPiece);
+//        
+//       plateau.setPieceCourante(p1);
 
         grilleGridPane.getRowConstraints().clear();
         grilleGridPane.getColumnConstraints().clear();
@@ -92,6 +98,8 @@ public class PlateauJeuController implements Initializable {
 //        pcourante.translate(Translation.Bas);
 //        draw();
     }
+    
+    
     
     public void draw()
     {
