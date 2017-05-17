@@ -60,11 +60,9 @@ public class PlateauJeuController implements Initializable {
         tabCase[1][0]=new Case(javafx.scene.paint.Color.BEIGE);
         tabCase[1][1]=null;
         Piece p1 = new Piece(tabCase, positionPiece);
-        //plateau.getGrille().ajoutPiece(p1);
         
         plateau.setPieceCourante(p1);
 
-//        this.grilleGridPane = new grilleGridPane();
         grilleGridPane.getRowConstraints().clear();
         grilleGridPane.getColumnConstraints().clear();
         
@@ -82,7 +80,7 @@ public class PlateauJeuController implements Initializable {
                 r.setWidth(20);
                 r.setHeight(20);
 
-                grilleGridPane.add(r, i, j);
+                grilleGridPane.add(r, j, i);
             }
         }
     }    
@@ -90,17 +88,19 @@ public class PlateauJeuController implements Initializable {
     @FXML
     public void handlerOnActionButtonDown(ActionEvent event) throws CloneNotSupportedException 
     {
-        Piece pcourante = plateau.getPieceCourante();
-        pcourante.translate(Translation.Bas);
-        draw();
+//        Piece pcourante = plateau.getPieceCourante();
+//        pcourante.translate(Translation.Bas);
+//        draw();
     }
     
-    public void draw(){
-        for (int i = 0; i < numCols; i++) {
-            for (int j = 0; j < numRows; j++) {
+    public void draw()
+    {
+        for (int i = 0; i < numCols; i++) 
+        {
+            for (int j = 0; j < numRows; j++) 
+            {
                 
                 Rectangle r = (Rectangle) getNodeByRowColumnIndex(i, j, this.grilleGridPane);
-                System.out.println("lib.jeuplateau.controleur.PlateauJeuController.draw()");
                 if(plateau.getGrille().getTableauCase()[i][j] != null)
                     r.setFill(plateau.getGrille().getTableauCase()[i][j].getColor());
                 else
@@ -108,36 +108,40 @@ public class PlateauJeuController implements Initializable {
             }
         }
         
-        for (int i = 0; i < numCols; i++) {
-            for (int j = 0; j < numRows; j++) {
-                
-                if(plateau.getPieceCourante().getPositionPiece().getX() == i && plateau.getPieceCourante().getPositionPiece().getY()== j){
+        for (int i = 0; i < numCols; i++) 
+        {
+            for (int j = 0; j < numRows; j++) 
+            {
+                if(plateau.getPieceCourante().getPositionPiece().getX() == i && plateau.getPieceCourante().getPositionPiece().getY()== j)
+                {
+                    Piece p = plateau.getPieceCourante();
+                    int li = p.getTableauCases().length;
+                    int c = p.getTableauCases()[0].length; 
 
-                            Piece p = plateau.getPieceCourante();
-                            int li = p.getTableauCases().length;
-                            int c = p.getTableauCases()[0].length; 
+                    System.out.println("i = " + i);
+                    System.out.println("j = "+ j);
 
-                            System.out.println("i = " + i);
-                            System.out.println("j = "+ j);
+                    System.out.println("l = " + li);
+                    System.out.println("c = "+ c);
 
-                            System.out.println("l = " + li);
-                            System.out.println("c = "+ c);
-
-                             for (int k = 0; k < li; k++) {
-                                for (int l = 0; l < c; l++) {
-                                     Rectangle r = (Rectangle) getNodeByRowColumnIndex(i+k, j+l, this.grilleGridPane);
-                                    if(plateau.getPieceCourante().getTableauCases()[k][l] != null){
-                                          System.out.println("");
-
-                                        r.setFill(p.getTableauCases()[k][l].getColor());
-
-                                        System.out.println("k = " + k + "l = " + l);
-                                    }else{
-                                                r.setFill(javafx.scene.paint.Color.BLACK);
-                                                }
-
-                                }
+                     for (int k = 0; k < li; k++) 
+                     {
+                        for (int l = 0; l < c; l++) 
+                        {
+                            Rectangle r = (Rectangle) getNodeByRowColumnIndex(i+k, j+l, this.grilleGridPane);
+                            if(plateau.getPieceCourante().getTableauCases()[k][l] != null)
+                            {
+                                System.out.println("");
+                                r.setFill(p.getTableauCases()[k][l].getColor());
+                                System.out.println("k = " + k + "l = " + l);
                             }
+//                            else
+//                            {
+//                                r.setFill(javafx.scene.paint.Color.BLACK);
+//                            }
+
+                        }
+                    }
                 }
             }
         }
@@ -156,28 +160,27 @@ public class PlateauJeuController implements Initializable {
         }
         
     }
-
     return result;
     }
+
     @FXML
     public void keyPressed(KeyEvent e) throws CloneNotSupportedException {
         KeyCode keyCode = e.getCode();
         Piece pcourante = plateau.getPieceCourante();
-   
         
          switch( keyCode ) 
          { 
             case UP:
-                pcourante.translate(Translation.Haut);
+                pcourante.translate(Translation.Haut, this.plateau.getGrille());
                 break;
             case DOWN:
-                pcourante.translate(Translation.Bas);
+                pcourante.translate(Translation.Bas, this.plateau.getGrille());
                 break;
             case LEFT:
-                pcourante.translate(Translation.Gauche);
+                pcourante.translate(Translation.Gauche, this.plateau.getGrille());
                 break;
             case RIGHT :
-                pcourante.translate(Translation.Droite);
+                pcourante.translate(Translation.Droite, this.plateau.getGrille());
                 break;
         }
          draw();
