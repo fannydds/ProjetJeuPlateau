@@ -82,7 +82,8 @@ public class PlateauJeuController implements Initializable {
                 grilleGridPane.add(r, i, j);
             }
         }
-        
+        //copie de la grille a l'initialisation
+        this.copie = copie();
         plateau.getGrille().ajoutPiece(p1);
     }    
     
@@ -98,15 +99,16 @@ public class PlateauJeuController implements Initializable {
     
     public void draw()
     {
-        this.copie = copie();
-        this.copie.ajoutPiece(plateau.getPieceCourante());
-        System.out.println("lib.jeuplateau.controleur.PlateauJeuController.draw()");
+        plateau.setGrille(this.copie);
+
+        this.plateau.getGrille().ajoutPiece(plateau.getPieceCourante());
+        
         for (int i = 0; i < numCols; i++) {
             for (int j = 0; j < numRows; j++) {
                 Rectangle r = (Rectangle) getNodeByRowColumnIndex(i, j, this.grilleGridPane);
 
-                if(copie.getTableauCase()[i][j] != null)
-                    r.setFill(copie.getTableauCase()[i][j].getColor());
+                if(this.plateau.getGrille().getTableauCase()[i][j] != null)
+                    r.setFill(this.plateau.getGrille().getTableauCase()[i][j].getColor());
                 else
                     r.setFill(javafx.scene.paint.Color.BLACK);
             }
@@ -131,16 +133,22 @@ public class PlateauJeuController implements Initializable {
     public Grille copie()
     {
         Grille tab = this.plateau.getGrille();
-        Grille tabCopie = new Grille(numCols, numCols);
+
+        Grille tabCopie = new Grille(numRows, numCols);
+        
         tabCopie.setHauteur(tab.getHauteur());
         tabCopie.setLargeur(tab.getLargeur());
-        
+
         Case[][] tabCases = new Case[tab.getTableauCase().length][tab.getTableauCase()[0].length];
+        
         for (int i = 0; i < tab.getTableauCase().length; i++) 
         {
             for (int j = 0; j < tab.getTableauCase()[0].length; j++) 
             {
-                tabCases[i][j] = new Case(tab.getTableauCase()[i][j].getColor());
+                if(tab.getTableauCase()[i][j]!=null)
+                    tabCases[i][j] = new Case(tab.getTableauCase()[i][j].getColor());
+                else
+                    tabCases[i][j] = null;
             }
         }
         tabCopie.setTableauCase(tabCases);
@@ -161,7 +169,7 @@ public class PlateauJeuController implements Initializable {
                 break;
             case DOWN:
                 pcourante.translate(Translation.Bas);
-                 draw();
+                draw();
                 break;
             case LEFT:
                 pcourante.translate(Translation.Gauche);
