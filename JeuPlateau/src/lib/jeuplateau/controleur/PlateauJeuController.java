@@ -36,6 +36,7 @@ public class PlateauJeuController implements Initializable {
     
     @FXML
     private GridPane grilleGridPane;
+    private Grille copie;
     
     private int numCols;
     private int numRows;
@@ -60,16 +61,12 @@ public class PlateauJeuController implements Initializable {
         tabCase[1][0]=new Case(javafx.scene.paint.Color.BEIGE);
         tabCase[1][1]=null;
         Piece p1 = new Piece(tabCase, positionPiece);
-        plateau.getGrille().ajoutPiece(p1);
         
         plateau.setPieceCourante(p1);
 
-//        this.grilleGridPane = new grilleGridPane();
         grilleGridPane.getRowConstraints().clear();
         grilleGridPane.getColumnConstraints().clear();
-        
 
-        System.out.println(grilleGridPane.getColumnConstraints());
         for (int i = 0; i < numCols; i++) {
             for (int j = 0; j < numRows; j++) {
                 Rectangle r = new Rectangle();
@@ -85,6 +82,8 @@ public class PlateauJeuController implements Initializable {
                 grilleGridPane.add(r, i, j);
             }
         }
+        
+        plateau.getGrille().ajoutPiece(p1);
     }    
     
     @FXML
@@ -92,16 +91,22 @@ public class PlateauJeuController implements Initializable {
     {
         Piece pcourante = plateau.getPieceCourante();
         pcourante.translate(Translation.Bas);
+//        this.plateau.getGrille().setTableauCase(this.copie);
+        
         draw();
     }
     
-    public void draw(){
+    public void draw()
+    {
+        this.copie = copie();
+        this.copie.ajoutPiece(plateau.getPieceCourante());
+        System.out.println("lib.jeuplateau.controleur.PlateauJeuController.draw()");
         for (int i = 0; i < numCols; i++) {
             for (int j = 0; j < numRows; j++) {
                 Rectangle r = (Rectangle) getNodeByRowColumnIndex(i, j, this.grilleGridPane);
-                System.out.println("lib.jeuplateau.controleur.PlateauJeuController.draw()");
-                if(plateau.getGrille().getTableauCase()[i][j] != null)
-                    r.setFill(plateau.getGrille().getTableauCase()[i][j].getColor());
+
+                if(copie.getTableauCase()[i][j] != null)
+                    r.setFill(copie.getTableauCase()[i][j].getColor());
                 else
                     r.setFill(javafx.scene.paint.Color.BLACK);
             }
@@ -119,29 +124,52 @@ public class PlateauJeuController implements Initializable {
                 break;
             }
         }
-        
     }
-
     return result;
     }
+    
+    public Grille copie()
+    {
+        Grille tab = this.plateau.getGrille();
+        Grille tabCopie = new Grille(numCols, numCols);
+        tabCopie.setHauteur(tab.getHauteur());
+        tabCopie.setLargeur(tab.getLargeur());
+        
+        Case[][] tabCases = new Case[tab.getTableauCase().length][tab.getTableauCase()[0].length];
+        for (int i = 0; i < tab.getTableauCase().length; i++) 
+        {
+            for (int j = 0; j < tab.getTableauCase()[0].length; j++) 
+            {
+                tabCases[i][j] = new Case(tab.getTableauCase()[i][j].getColor());
+            }
+        }
+        tabCopie.setTableauCase(tabCases);
+        return tabCopie;
+    }
+    
     @FXML
     public void keyPressed(KeyEvent e) throws CloneNotSupportedException {
         KeyCode keyCode = e.getCode();
         Piece pcourante = plateau.getPieceCourante();
-
+//        this.plateau.getGrille().setTableauCa¢se(this.copie);
+//        copie.ajoutPiece(pcourante);
          switch( keyCode ) 
          { 
             case UP:
                 pcourante.translate(Translation.Haut);
+                draw();
                 break;
             case DOWN:
                 pcourante.translate(Translation.Bas);
+                 draw();
                 break;
             case LEFT:
                 pcourante.translate(Translation.Gauche);
+                 draw();
                 break;
             case RIGHT :
                 pcourante.translate(Translation.Droite);
+                 draw();
                 break;
         }
     } 

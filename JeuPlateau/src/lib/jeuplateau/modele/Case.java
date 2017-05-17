@@ -20,6 +20,9 @@ public class Case implements Cloneable {
         this.color = color;
     }
 
+//    public Case(Case case) {
+//        this.color = case.getColor();
+//    }
     public Color getColor() {
         return color;
     }

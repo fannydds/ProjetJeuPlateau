@@ -40,17 +40,17 @@ public class JeuPlateau extends Application {
         Scene scene = new Scene(root);
         stage.setScene(scene);
         
-//        scene.setOnKeyPressed(new EventHandler<KeyEvent>() {
-//            @Override
-//            public void handle(KeyEvent event) {
-//                try {
-//                    controller.keyPressed(event);
-//                } catch (CloneNotSupportedException ex) {
-//                    Logger.getLogger(JeuPlateau.class.getName()).log(Level.SEVERE, null, ex);
-//                }
-//            }
-//            
-//        });
+        scene.setOnKeyPressed(new EventHandler<KeyEvent>() {
+            @Override
+            public void handle(KeyEvent event) {
+                try {
+                    controller.keyPressed(event);
+                } catch (CloneNotSupportedException ex) {
+                    Logger.getLogger(JeuPlateau.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+            
+        });
         
         controller.initGrilleGridPane(col, row);
         
