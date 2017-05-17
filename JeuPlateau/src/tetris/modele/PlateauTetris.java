@@ -25,7 +25,7 @@ public class PlateauTetris extends Plateau {
     public PlateauTetris() {
       
         super(NB_COLS, NB_ROWS);
-        this.setPieceCourante(PieceTetris.getCarre());
+        this.setPieceCourante(PieceTetris.getRandomPieceTetris());
         
     }
     
