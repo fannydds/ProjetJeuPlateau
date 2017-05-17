@@ -77,19 +77,26 @@ public class Piece  implements Cloneable
     }
     
     private void traitementTranslationBas(){
-        this.positionPiece.setX(this.positionPiece.getX()+1);
+//        this.positionPiece.setX(this.positionPiece.getX()+1);
+        this.positionPiece.setY(this.positionPiece.getY()+1);
     }
 
     private void traitementTranslationHaut() {
-        this.positionPiece.setX(this.positionPiece.getX()-1);
+//        for (Position case1 : tableauCaseBusy) {
+//            case1.setX(case1.getX()-1);
+//        }
     }
 
     private void traitementTranslationGauche() {
-        this.positionPiece.setY(this.positionPiece.getY()-1);
+//        for (Position case1 : tableauCaseBusy) {
+//            case1.setY(case1.getY()-1);
+//        }    
     }
 
     private void traitementTranslationDroite() {
-        this.positionPiece.setY(this.positionPiece.getY()+1);
+//        for (Position case1 : tableauCaseBusy) {
+//            case1.setY(case1.getY()+1);
+//        } 
     }
 //    
 //    private Position getMaxXY(Position[] tableauPosition)
