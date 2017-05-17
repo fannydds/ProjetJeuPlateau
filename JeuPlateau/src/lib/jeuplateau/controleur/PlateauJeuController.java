@@ -163,7 +163,8 @@ public class PlateauJeuController implements Initializable {
     public void keyPressed(KeyEvent e) throws CloneNotSupportedException {
         KeyCode keyCode = e.getCode();
         Piece pcourante = plateau.getPieceCourante();
-
+   
+        
          switch( keyCode ) 
          { 
             case UP:
@@ -179,5 +180,6 @@ public class PlateauJeuController implements Initializable {
                 pcourante.translate(Translation.Droite);
                 break;
         }
+         draw();
     } 
 }

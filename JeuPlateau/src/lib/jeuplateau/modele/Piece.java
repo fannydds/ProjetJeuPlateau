@@ -77,83 +77,19 @@ public class Piece  implements Cloneable
     }
     
     private void traitementTranslationBas(){
-//        this.positionPiece.setX(this.positionPiece.getX()+1);
-        this.positionPiece.setY(this.positionPiece.getY()+1);
+ this.positionPiece.setX(this.positionPiece.getX()+1);
     }
 
     private void traitementTranslationHaut() {
-//        for (Position case1 : tableauCaseBusy) {
-//            case1.setX(case1.getX()-1);
-//        }
+this.positionPiece.setX(this.positionPiece.getX()-1);
     }
 
     private void traitementTranslationGauche() {
-//        for (Position case1 : tableauCaseBusy) {
-//            case1.setY(case1.getY()-1);
-//        }    
+this.positionPiece.setY(this.positionPiece.getY()-1);
     }
 
     private void traitementTranslationDroite() {
-//        for (Position case1 : tableauCaseBusy) {
-//            case1.setY(case1.getY()+1);
-//        } 
+        this.positionPiece.setY(this.positionPiece.getY()+1); 
     }
-//    
-//    private Position getMaxXY(Position[] tableauPosition)
-//    {
-//        int maxX = tableauCaseBusy[0].getX();
-//        int maxY = tableauCaseBusy[0].getY();
-//        
-//        for (Position position : tableauPosition) 
-//        {
-//           if(position.getX()>maxX)
-//               maxX = position.getX();
-//           if(position.getY()>maxY)
-//               maxY = position.getY();
-//        }
-//        
-//        Position pos = new Position(maxX,maxY);
-//        return pos;
-//    }
-//    
-//       private Position getMinXY(Position[] tableauPosition)
-//    {
-//        int minX = tableauCaseBusy[0].getX();
-//        int minY = tableauCaseBusy[0].getY();
-//        
-//        for (Position position : tableauPosition) 
-//        {
-//           if(position.getX()<minX)
-//               minX = position.getX();
-//           if(position.getY()<minY)
-//               minY = position.getY();
-//        }
-//        
-//        Position pos = new Position(minX,minY);
-//        return pos;
-//    }
 
-//       private boolean[][] creerMatriceZeros()
-//       {
-//            Position posMin = getMinXY(this.tableauCaseBusy);
-//            Position posMax = getMaxXY(this.tableauCaseBusy);
-//           
-//            boolean[][] tableau = new boolean[posMax.getX()-posMin.getX()+2][posMax.getY()-posMin.getY()+2];
-//            for (int i = posMin.getX(); i <=posMax.getX(); i++) {
-//               for (int j = posMin.getY(); j <= posMax.getY(); j++) {
-//                   tableau[i][j] = false;
-//               }
-//            }
-//           
-//            for (Position case1 : tableauCaseBusy) 
-//            {
-//               tableau[case1.getX()][case1.getY()] = true;
-//            }
-//           return tableau;
-//       }
-    
-    
-    
-    
-    
 }
