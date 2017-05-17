@@ -117,29 +117,24 @@ public class PlateauJeuController implements Initializable {
                     Piece p = plateau.getPieceCourante();
                     int li = p.getTableauCases().length;
                     int c = p.getTableauCases()[0].length; 
-
-                    System.out.println("i = " + i);
-                    System.out.println("j = "+ j);
-
-                    System.out.println("l = " + li);
-                    System.out.println("c = "+ c);
+//
+//                    System.out.println("i = " + i);
+//                    System.out.println("j = "+ j);
+//
+//                    System.out.println("l = " + li);
+//                    System.out.println("c = "+ c);
 
                      for (int k = 0; k < li; k++) 
                      {
                         for (int l = 0; l < c; l++) 
                         {
                             Rectangle r = (Rectangle) getNodeByRowColumnIndex(i+k, j+l, this.grilleGridPane);
-                            if(plateau.getPieceCourante().getTableauCases()[k][l] != null)
+                            if(p.getTableauCases()[k][l] != null)
                             {
-                                System.out.println("");
+//                                System.out.println("");
                                 r.setFill(p.getTableauCases()[k][l].getColor());
-                                System.out.println("k = " + k + "l = " + l);
+//                                System.out.println("k = " + k + "l = " + l);
                             }
-//                            else
-//                            {
-//                                r.setFill(javafx.scene.paint.Color.BLACK);
-//                            }
-
                         }
                     }
                 }
@@ -171,7 +166,9 @@ public class PlateauJeuController implements Initializable {
          switch( keyCode ) 
          { 
             case UP:
-                pcourante.translate(Translation.Haut, this.plateau.getGrille());
+                pcourante.rotation(this.plateau.getGrille());
+                
+//                pcourante.translate(Translation.Haut, this.plateau.getGrille());
                 break;
             case DOWN:
                 pcourante.translate(Translation.Bas, this.plateau.getGrille());

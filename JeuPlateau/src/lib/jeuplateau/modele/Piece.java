@@ -78,75 +78,72 @@ public class Piece  implements Cloneable
     
     private void traitementTranslationBas(Grille grille){
         Position pos = new Position(this.positionPiece.getX()+1, this.positionPiece.getY());
-//        if(!enConflit(pos, grille))
+        if(!enConflit(pos, grille,this.getTableauCases()))
             this.positionPiece.setX(this.positionPiece.getX()+1);
     }
 
     private void traitementTranslationHaut(Grille grille) {
         Position pos = new Position(this.positionPiece.getX()-1, this.positionPiece.getY());
        
-        if(!enConflit(pos, grille))
+        if(!enConflit(pos, grille,this.getTableauCases()))
             this.positionPiece.setX(this.positionPiece.getX()-1);
     }
 
     private void traitementTranslationGauche(Grille grille) {
         Position pos = new Position(this.positionPiece.getX(), this.positionPiece.getY()-1);
        
-        if(!enConflit(pos, grille))
+        if(!enConflit(pos, grille,this.getTableauCases()))
             this.positionPiece.setY(this.positionPiece.getY()-1);
     }
 
     private void traitementTranslationDroite(Grille grille) {
         Position pos = new Position(this.positionPiece.getX(), this.positionPiece.getY()+1);
        
-        if(!enConflit(pos, grille))
+        if(!enConflit(pos, grille,this.getTableauCases()))
             this.positionPiece.setY(this.positionPiece.getY()+1); 
     }
 
-    private boolean enConflit(Position posApres, Grille grille){
+    private boolean enConflit(Position posApres, Grille grille, Case[][] tab)
+    {
         Case[][] cases = grille.getTableauCase();
-        
-        //Parcours grille de jeu
-//        for (int i = 0; i < cases.length; i++) {
-//            for (int j = 0; j < cases[0].length; j++) {
-//                
-                //Parcours grille de la piece
-                for (int k = 0; k < this.tableauCases.length; k++) {
-                    for (int l = 0; l < this.tableauCases[0].length; l++) {
-                        if((cases[posApres.getX()+k][posApres.getY()+l] != null) && (this.tableauCases[k][l] != null))
-                            return true;
-                    }
-                }
-//            }
-//        }
+   
+        //Parcours grille de la piece
+        for (int k = 0; k < tab.length; k++) {
+            for (int l = 0; l < tab[0].length; l++) {
+                if((cases[posApres.getX()+k][posApres.getY()+l] != null) && (tab[k][l] != null))
+                    return true;
+            }
+        }
         return false;
     }
     
     
-    public boolean rotation(){
-        
-        this.rotateTableauCasesBy90Degrees();
+    public boolean rotation(Grille grille)
+    {
+        this.rotateTableauCasesBy90Degrees(grille);
 
         return true;
     }
     
     
-    private void rotateTableauCasesBy90Degrees() {
-		Case[][] newTabCases = createNewTableauCases();
-               
-		int columns = newTabCases.length;
-		int rows = newTabCases[0].length;
-		
-		for (int j = 0; j < columns; j++) {
-			for (int i = 0, k = rows - 1; i < rows; i++, k--) {
-				newTabCases[j][i] = this.tableauCases[k][j];
-			}
+    private void rotateTableauCasesBy90Degrees(Grille grille) 
+    {
+	Case[][] newTabCases = createNewTableauCases();
+        
+	int columns = newTabCases.length;
+	int rows = newTabCases[0].length;
+	
+	for (int j = 0; j < columns; j++) {
+		for (int i = 0, k = rows - 1; i < rows; i++, k--) {
+			newTabCases[j][i] = this.tableauCases[k][j];
 		}
-		this.tableauCases = newTabCases;
 	}
+        if(!enConflit(this.positionPiece, grille,newTabCases))
+            this.tableauCases = newTabCases;
+    }
 
-	private Case[][] createNewTableauCases() {
-            
+	private Case[][] createNewTableauCases() 
+        {
             int col = this.tableauCases.length;
             int row = this.tableauCases[0].length;
 		return new Case[col][row];
