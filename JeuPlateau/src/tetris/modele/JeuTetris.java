@@ -27,8 +27,13 @@ public class JeuTetris extends Application {
 
     private PlateauJeuController controller;
     
+    private int col = 10;
+    private int row = 10;
+    
     private Plateau plateau = new PlateauTetris();
-
+    
+   
+    
     @Override
     public void start(Stage stage) throws Exception {
         
