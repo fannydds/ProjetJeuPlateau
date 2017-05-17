@@ -27,7 +27,7 @@ public class Grille {
         
         this.tableauCase = new Case[x][y];
         
-//        this.tableauCase[9][9]=new Case(Color.RED);
+        this.tableauCase[9][9]=new Case(Color.RED);
     }
 
     public Case[][] getTableauCase() {
