@@ -103,15 +103,21 @@ public class Piece  implements Cloneable
             this.positionPiece.setY(this.positionPiece.getY()+1); 
     }
 
-    private boolean enConflit(Position posApres, Grille grille, Case[][] tab)
+    private boolean enConflit(Position posApres, Grille grille, Case[][] tab) 
     {
         Case[][] cases = grille.getTableauCase();
-   
+
         //Parcours grille de la piece
-        for (int k = 0; k < tab.length; k++) {
-            for (int l = 0; l < tab[0].length; l++) {
-                if((cases[posApres.getX()+k][posApres.getY()+l] != null) && (tab[k][l] != null))
+        for (int k = 0; k < tab.length; k++) 
+        {
+            for (int l = 0; l < tab[0].length; l++) 
+            {
+                Position pos1 = new Position((posApres.getX()+k), (posApres.getY()+l));
+                if((cases[pos1.getX()][pos1.getY()] != null) 
+                        && (tab[k][l] != null))
+                {
                     return true;
+                }
             }
         }
         return false;
@@ -124,7 +130,18 @@ public class Piece  implements Cloneable
 
         return true;
     }
-    
+//    
+//    public boolean positionHorsGrille(Grille grille, Position pos){
+//        if((0<=pos.getX())
+//            &&(pos.getX()<grille.getTableauCase().length)
+//            &&(0<=pos.getY())
+//            &&(pos.getY()<grille.getTableauCase()[0].length))
+//            {
+//                return false;
+//            }
+//        System.out.println("zzzz");
+//        return true;
+//    }
     
     private void rotateTableauCasesBy90Degrees(Grille grille) 
     {
