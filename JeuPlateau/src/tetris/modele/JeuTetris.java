@@ -9,12 +9,14 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.application.Application;
 import static javafx.application.Application.launch;
+import javafx.application.Platform;
 import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 import lib.jeuplateau.controleur.PlateauJeuController;
 import lib.jeuplateau.modele.JeuPlateau;
 import lib.jeuplateau.modele.Plateau;
@@ -65,10 +67,18 @@ public class JeuTetris extends Application {
         
         controller.initGrilleGridPane(plateau);
         
-        
+         stage.setResizable(false);
+         stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
+            @Override
+            public void handle(WindowEvent t) {
+                Platform.exit();
+                System.exit(0);
+            }
+});
         
         stage.show();
         
+       
         
     }
     
