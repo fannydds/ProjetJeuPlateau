@@ -17,6 +17,8 @@ public class Plateau extends Observable{
     
     private Grille grille;
     
+    private Score score;
+
     private int col;
     private int row;
     
@@ -27,6 +29,7 @@ public class Plateau extends Observable{
     }
 
     public Plateau( int col, int row) {
+        this.score = new Score();
         this.col = col;
         this.row = row;
         this.grille = new Grille(this.row, this.col);
@@ -59,6 +62,13 @@ public class Plateau extends Observable{
         return pieceCourante;
     }
     
+    public Score getScore() {
+        return score;
+    }
+
+    public void setScore(Score score) {
+        this.score = score;
+    }
     public void startGame(){
         
     }

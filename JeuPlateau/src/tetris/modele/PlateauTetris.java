@@ -14,6 +14,7 @@ import lib.jeuplateau.modele.Translation;
 import java.util.Observable;
 import java.util.Timer;
 import java.util.TimerTask;
+import lib.jeuplateau.modele.Score;
 
 /**
  *
@@ -30,33 +31,7 @@ public class PlateauTetris extends Plateau {
     public PlateauTetris() 
     {
         super(NB_COLS, NB_ROWS);
-        
-//        PieceTetris p = PieceTetris.getLigne();
-//        p.setPositionPiece(new Position(6,0));
-//        this.getGrille().ajoutPiece(p);
-////        PieceTetris p = PieceTetris.getLigne();
-//        p.setPositionPiece(new Position(6,1));
-//        this.getGrille().ajoutPiece(p);
-////        PieceTetris p = PieceTetris.getLigne();
-//        p.setPositionPiece(new Position(6,2));
-//        this.getGrille().ajoutPiece(p);
-//        p.setPositionPiece(new Position(6,3));
-//        this.getGrille().ajoutPiece(p);
-//        p.setPositionPiece(new Position(6,4));
-//        this.getGrille().ajoutPiece(p);
-//        p.setPositionPiece(new Position(6,5));
-//        this.getGrille().ajoutPiece(p);
-//        p.setPositionPiece(new Position(6,6));
-//        this.getGrille().ajoutPiece(p);
-//        p.setPositionPiece(new Position(6,7));
-//        this.getGrille().ajoutPiece(p);
-//        p.setPositionPiece(new Position(6,8));
-//        this.getGrille().ajoutPiece(p);
-//        p.setPositionPiece(new Position(6,9));
-//        this.getGrille().ajoutPiece(p);
         this.setPieceCourante(PieceTetris.getRandomPieceTetris());
-//        this.ligneComplete();
-
     }
 
     public PlateauTetris(int col, int row) {
@@ -91,6 +66,9 @@ public class PlateauTetris extends Plateau {
         }
         
         this.getGrille().setTableauCase(cases2);
+        Score sc = this.getScore();
+        sc.add(100);
+        System.out.println(sc.getScore());
     }
     
     public boolean ligneComplete()
@@ -109,13 +87,6 @@ public class PlateauTetris extends Plateau {
             if(b) supprimerLigneComplete(i);
         }
         return true;
-//        for (int i = 0; i < 10; i++) 
-//        {
-//            if(this.getGrille().getTableauCase()[this.getGrille().getTableauCase()[0].length-1][i]==null)
-//                return false;
-//        }
-//        supprimerLigneComplete();
-//        return true;
     }
     
     @Override

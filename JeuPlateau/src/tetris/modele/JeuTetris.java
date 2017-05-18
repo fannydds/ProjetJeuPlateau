@@ -30,8 +30,6 @@ public class JeuTetris extends Application {
     
     private Plateau plateau = new PlateauTetris();
     
-   
-    
     @Override
     public void start(Stage stage) throws Exception {
         
