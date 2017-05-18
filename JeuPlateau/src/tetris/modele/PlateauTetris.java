@@ -55,7 +55,7 @@ public class PlateauTetris extends Plateau {
 //        p.setPositionPiece(new Position(6,9));
 //        this.getGrille().ajoutPiece(p);
         this.setPieceCourante(PieceTetris.getRandomPieceTetris());
-        this.ligneComplete();
+//        this.ligneComplete();
 
     }
 
@@ -68,20 +68,54 @@ public class PlateauTetris extends Plateau {
     }
     
 
-    public void supprimerLigneComplete()
+    public void supprimerLigneComplete(int numLigne)
     {
         Case[][] cases = this.getGrille().getTableauCase();
         Case[][] cases2 = new Case[this.getGrille().getTableauCase().length][this.getGrille().getTableauCase()[0].length];
         
-        for (int i = 0; i < this.getGrille().getTableauCase().length-1; i++) 
+        for (int i = 0; i < numLigne+1; i++) 
         {
             for (int j = 0; j < this.getGrille().getTableauCase()[0].length; j++) 
             {
-                cases2[i+1][j]=cases[i][j];
+                if(i-1 >=0)
+                    cases2[i][j]=cases[i-1][j];
+                else cases2[0][j] = null;
             }
         }
-        this.getGrille().setTableauCase(cases2);
+        for (int i = numLigne+1; i < cases.length; i++) 
+        {
+            for (int j = 0; j < cases[0].length; j++) 
+            {
+                    cases2[i][j]=cases[i][j];
+            }
+        }
         
+        this.getGrille().setTableauCase(cases2);
+    }
+    
+    public boolean ligneComplete()
+    {
+        int maxCol = this.getGrille().getTableauCase()[0].length;
+        int maxLigne = this.getGrille().getTableauCase().length;
+        
+        for (int i = 0; i < maxLigne; i++) 
+        {
+            boolean b = true;
+            for (int j = 0; j < maxCol; j++) 
+            {
+                if(this.getGrille().getTableauCase()[i][j]==null)
+                    b = false;
+            }
+            if(b) supprimerLigneComplete(i);
+        }
+        return true;
+//        for (int i = 0; i < 10; i++) 
+//        {
+//            if(this.getGrille().getTableauCase()[this.getGrille().getTableauCase()[0].length-1][i]==null)
+//                return false;
+//        }
+//        supprimerLigneComplete();
+//        return true;
     }
     
     @Override
@@ -107,11 +141,12 @@ public class PlateauTetris extends Plateau {
                               }
                               System.out.println("nouvelle piece 1");
                               getGrille().ajoutPiece(getPieceCourante());
+                              ligneComplete();
                               setChanged();
                               notifyObservers();
                               clearChanged();
                               getNewPieceCourante();
-                              ligneComplete();
+                              
                               nvellePiece =true;
                           }
                           
@@ -124,11 +159,12 @@ public class PlateauTetris extends Plateau {
                             }
                             System.out.println("nouvelle piece 2");
                             getGrille().ajoutPiece(getPieceCourante());
+                            ligneComplete();
                             setChanged();
                             notifyObservers();
                             clearChanged();
                             getNewPieceCourante();
-                            ligneComplete();
+                           
                             nvellePiece =true;
                         }
                 }
@@ -136,29 +172,5 @@ public class PlateauTetris extends Plateau {
             }, 0,500);
     }
     
-    public boolean ligneComplete()
-    {
-        int maxCol = this.getGrille().getTableauCase()[0].length;
-        int maxLigne = this.getGrille().getTableauCase().length;
-        
-        
-        for (int i = 0; i < maxLigne; i++) 
-        {
-            boolean b = true;
-            for (int j = 0; j < maxCol; j++) 
-            {
-                if(this.getGrille().getTableauCase()[maxLigne-1][j]==null)
-                    b = false;
-            }
-            if(b) supprimerLigneComplete();
-        }
-        return true;
-//        for (int i = 0; i < 10; i++) 
-//        {
-//            if(this.getGrille().getTableauCase()[this.getGrille().getTableauCase()[0].length-1][i]==null)
-//                return false;
-//        }
-//        supprimerLigneComplete();
-//        return true;
-    }
+   
 }
