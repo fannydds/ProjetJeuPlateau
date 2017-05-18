@@ -116,12 +116,12 @@ public class Piece  implements Cloneable
         {
             for (int l = 0; l < tab[0].length; l++) 
             {
-                Position pos1 = new Position((posApres.getX()+k), (posApres.getY()+l));
-                if((cases[pos1.getX()][pos1.getY()] != null) 
-                        && (tab[k][l] != null))
-                {
-                    return true;
-                }
+                    Position pos1 = new Position((posApres.getX()+k), (posApres.getY()+l));
+                    if((cases[pos1.getX()][pos1.getY()] != null) 
+                            && (tab[k][l] != null)){
+                        return true;
+                    }
+                
             }
         }
         return false;
