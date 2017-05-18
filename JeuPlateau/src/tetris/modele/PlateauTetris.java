@@ -9,6 +9,9 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import lib.jeuplateau.modele.Plateau;
 import lib.jeuplateau.modele.Translation;
+import java.util.Observable;
+import java.util.Timer;
+import java.util.TimerTask;
 
 /**
  *
@@ -19,7 +22,7 @@ import lib.jeuplateau.modele.Translation;
 public class PlateauTetris extends Plateau {
     
     public final static int NB_COLS = 10;
-    public final static int NB_ROWS = 10;
+    public final static int NB_ROWS = 16;
     
     
     public PlateauTetris() {
@@ -33,32 +36,81 @@ public class PlateauTetris extends Plateau {
         this.setPieceCourante(PieceTetris.getRandomPieceTetris());
     }
     
+    @Override
     public void startGame(){
-        getNewPieceCourante();
-        Thread t = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                int i = 0;
-                while(true){
-                    try {
-                        getPieceCourante().translate(Translation.Bas, getGrille());
-//                        setChanged();
-//                        clearChanged();
-                        
-                    } catch (CloneNotSupportedException ex) {
-                        Logger.getLogger(PlateauTetris.class.getName()).log(Level.SEVERE, null, ex);
-                    }
-                    if(i >= 30){
-                       getNewPieceCourante();
-                       i = 0;
-                    }
-                    i++;
+            getNewPieceCourante();
+            
+            Timer t = new Timer();
+            
+            t.scheduleAtFixedRate(new TimerTask() {
+                boolean nvellePiece = false;
+                @Override
+                public void run() {
+                        try {
+                          System.out.println(".run() ");
+                          if(getPieceCourante().translate(Translation.Bas, getGrille())){
+                              setChanged();
+                              notifyObservers();
+                              clearChanged();
+                              nvellePiece =false;
+                         }else{
+                              if(nvellePiece){
+                                  cancel();
+                              }
+                              System.out.println("nouvelle piece 1");
+                              getGrille().ajoutPiece(getPieceCourante());
+                              setChanged();
+                              notifyObservers();
+                              clearChanged();
+                              getNewPieceCourante();
+                              nvellePiece =true;
+                          }
+                          
+
+                        } catch (CloneNotSupportedException ex ) {
+                            Logger.getLogger(PlateauTetris.class.getName()).log(Level.SEVERE, null, ex);
+                        } catch (ArrayIndexOutOfBoundsException e){
+                            if(nvellePiece){
+                                  cancel();
+                            }
+                            System.out.println("nouvelle piece 2");
+                            getGrille().ajoutPiece(getPieceCourante());
+                            setChanged();
+                            notifyObservers();
+                            clearChanged();
+                            getNewPieceCourante();
+                            nvellePiece =true;
+                        }
                 }
-                
-                
-            }
-        });
-        t.start();
+            }, 0,500);
+            
+
+            
+//            Thread t = new Thread(new Runnable() {
+//                @Override
+//                public void run() {
+//                    int i = 0;
+//                    while(true){
+//                        try {
+//                            System.out.println(".run() " + i);
+//                          getPieceCourante().translate(Translation.Bas, getGrille());
+//                          setChanged();
+//                          clearChanged();
+//
+//                        } catch (CloneNotSupportedException ex) {
+//                            Logger.getLogger(PlateauTetris.class.getName()).log(Level.SEVERE, null, ex);
+//                        }
+//                        if(i >= 10){
+//                            getNewPieceCourante();
+//                            i = 0;
+//                        }
+//                        i++;
+//                    }
+//                    
+//                    
+//                }
+//            });
+//            t.start();
     }
     
     

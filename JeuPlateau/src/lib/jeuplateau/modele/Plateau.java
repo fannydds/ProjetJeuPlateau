@@ -7,12 +7,13 @@ package lib.jeuplateau.modele;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Observable;
 
 /**
  * Represente une grille contenant des pieces + autres elements (labels, scores...)
  * @author Epulapp
  */
-public class Plateau {
+public class Plateau extends Observable{
     
     private Grille grille;
     
@@ -53,5 +54,13 @@ public class Plateau {
 
     public Piece getPieceCourante() {
         return pieceCourante;
+    }
+    
+    public void startGame(){
+        
+    }
+
+    public void pause() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }

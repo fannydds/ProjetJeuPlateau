@@ -9,6 +9,8 @@ import java.awt.Color;
 import lib.jeuplateau.modele.*;
 import java.net.URL;
 import java.util.List;
+import java.util.Observable;
+import java.util.Observer;
 import java.util.Random;
 import java.util.ResourceBundle;
 import javafx.application.Platform;
@@ -32,7 +34,7 @@ import javafx.scene.shape.Rectangle;
  *
  * @author Epulapp
  */
-public class PlateauJeuController implements Initializable {
+public class PlateauJeuController implements Initializable, Observer{
     
     @FXML
     private GridPane grilleGridPane;
@@ -58,6 +60,8 @@ public class PlateauJeuController implements Initializable {
         numCols = plateau.getCol();
         numRows = plateau.getRow();
         this.plateau = plateau;
+        
+        this.plateau.addObserver(this);
        
 //        Position positionPiece = new Position(1,1);
 //        Case[][] tabCase = new Case[2][2];
@@ -72,10 +76,12 @@ public class PlateauJeuController implements Initializable {
         grilleGridPane.getRowConstraints().clear();
         grilleGridPane.getColumnConstraints().clear();
         
+////        grilleGridPane.setGridLinesVisible(true);
+        
 
         System.out.println(grilleGridPane.getColumnConstraints());
-        for (int i = 0; i < numCols; i++) {
-            for (int j = 0; j < numRows; j++) {
+        for (int i = 0; i < numRows; i++) {
+            for (int j = 0; j < numCols; j++) {
                 Rectangle r = new Rectangle();
                 
                 if(plateau.getGrille().getTableauCase()[i][j] != null)
@@ -83,8 +89,10 @@ public class PlateauJeuController implements Initializable {
                 else
                     r.setFill(javafx.scene.paint.Color.BLACK);
                 
-                r.setWidth(20);
-                r.setHeight(20);
+                r.setStroke(javafx.scene.paint.Color.BLACK);
+                r.setStrokeWidth(2);
+                r.setWidth(40);
+                r.setHeight(40);
 
                 grilleGridPane.add(r, j, i);
             }
@@ -92,20 +100,24 @@ public class PlateauJeuController implements Initializable {
     }    
     
     @FXML
-    public void handlerOnActionButtonDown(ActionEvent event) throws CloneNotSupportedException 
+    public void handleOnActionStart(ActionEvent event) 
     {
-//        Piece pcourante = plateau.getPieceCourante();
-//        pcourante.translate(Translation.Bas);
-//        draw();
+        plateau.startGame();
+    }
+    
+    @FXML
+    public void handleOnActionPause(ActionEvent event) 
+    {
+        plateau.pause();
     }
     
     
     
     public void draw()
     {
-        for (int i = 0; i < numCols; i++) 
+        for (int i = 0; i < numRows; i++) 
         {
-            for (int j = 0; j < numRows; j++) 
+            for (int j = 0; j < numCols; j++) 
             {
                 
                 Rectangle r = (Rectangle) getNodeByRowColumnIndex(i, j, this.grilleGridPane);
@@ -116,9 +128,9 @@ public class PlateauJeuController implements Initializable {
             }
         }
         
-        for (int i = 0; i < numCols; i++) 
+        for (int i = 0; i < numRows; i++) 
         {
-            for (int j = 0; j < numRows; j++) 
+            for (int j = 0; j < numCols; j++) 
             {
                 if(plateau.getPieceCourante().getPositionPiece().getX() == i && plateau.getPieceCourante().getPositionPiece().getY()== j)
                 {
@@ -173,10 +185,8 @@ public class PlateauJeuController implements Initializable {
         
          switch( keyCode ) 
          { 
-            case UP:
-                pcourante.rotation(this.plateau.getGrille());
-                
-//                pcourante.translate(Translation.Haut, this.plateau.getGrille());
+            case UP: 
+              pcourante.translate(Translation.Haut, this.plateau.getGrille());
                 break;
             case DOWN:
                 pcourante.translate(Translation.Bas, this.plateau.getGrille());
@@ -190,4 +200,11 @@ public class PlateauJeuController implements Initializable {
         }
          draw();
     } 
+
+    @Override
+    public void update(Observable o, Object arg) {
+        draw();
+    }
+    
+    
 }

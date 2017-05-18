@@ -45,62 +45,66 @@ public class Piece  implements Cloneable
     public void setPositionPiece(Position positionPiece) {
         this.positionPiece = positionPiece;
     }
-///////////////////////////////////////////////////////////// 
-
-    public boolean rotation(Rotation rot)
-    {
-//TODO
-        
-        
-        return true;
-    }
     
     public boolean translate(Translation trans, Grille grille) throws CloneNotSupportedException
     {
+        boolean ok = false;
         switch(trans){
             case Bas :
-                traitementTranslationBas(grille);
+                ok = traitementTranslationBas(grille);
                 break;
             case Haut :
-                traitementTranslationHaut(grille);
+                ok = traitementTranslationHaut(grille);
                 break;
             case Gauche:
-                traitementTranslationGauche(grille);
+                ok = traitementTranslationGauche(grille);
                 break;
             case Droite:
-                traitementTranslationDroite(grille);
+                ok = traitementTranslationDroite(grille);
                 break;
-            default :
-                return false;
         }
-        return true; 
+        return ok; 
     }
     
-    private void traitementTranslationBas(Grille grille){
+    private boolean traitementTranslationBas(Grille grille){
         Position pos = new Position(this.positionPiece.getX()+1, this.positionPiece.getY());
-        if(!enConflit(pos, grille,this.getTableauCases()))
+        if(!enConflit(pos, grille,this.getTableauCases())){
             this.positionPiece.setX(this.positionPiece.getX()+1);
+            return true;
+        }
+        return false;
+            
+            
     }
 
-    private void traitementTranslationHaut(Grille grille) {
+    private boolean traitementTranslationHaut(Grille grille) {
         Position pos = new Position(this.positionPiece.getX()-1, this.positionPiece.getY());
        
-        if(!enConflit(pos, grille,this.getTableauCases()))
+        if(!enConflit(pos, grille,this.getTableauCases())){
             this.positionPiece.setX(this.positionPiece.getX()-1);
+                return true;
+        }
+        return false;
     }
 
-    private void traitementTranslationGauche(Grille grille) {
+    private boolean traitementTranslationGauche(Grille grille) {
         Position pos = new Position(this.positionPiece.getX(), this.positionPiece.getY()-1);
        
-        if(!enConflit(pos, grille,this.getTableauCases()))
+        if(!enConflit(pos, grille,this.getTableauCases())){
             this.positionPiece.setY(this.positionPiece.getY()-1);
+                return true;
+        }
+        return false;
     }
 
-    private void traitementTranslationDroite(Grille grille) {
+    private boolean traitementTranslationDroite(Grille grille) {
         Position pos = new Position(this.positionPiece.getX(), this.positionPiece.getY()+1);
        
-        if(!enConflit(pos, grille,this.getTableauCases()))
-            this.positionPiece.setY(this.positionPiece.getY()+1); 
+        if(!enConflit(pos, grille,this.getTableauCases())){
+            this.positionPiece.setY(this.positionPiece.getY()+1);
+                return true;
+        }
+        return false;
     }
 
     private boolean enConflit(Position posApres, Grille grille, Case[][] tab)
@@ -120,13 +124,12 @@ public class Piece  implements Cloneable
     
     public boolean rotation(Grille grille)
     {
-        this.rotateTableauCasesBy90Degrees(grille);
+        return this.rotateTableauCasesBy90Degrees(grille);
 
-        return true;
     }
     
     
-    private void rotateTableauCasesBy90Degrees(Grille grille) 
+    private boolean rotateTableauCasesBy90Degrees(Grille grille) 
     {
 	Case[][] newTabCases = createNewTableauCases();
         
@@ -138,8 +141,12 @@ public class Piece  implements Cloneable
 			newTabCases[j][i] = this.tableauCases[k][j];
 		}
 	}
-        if(!enConflit(this.positionPiece, grille,newTabCases))
+        if(!enConflit(this.positionPiece, grille,newTabCases)){
             this.tableauCases = newTabCases;
+            return true;
+        }
+        
+        return false;
     }
 
 	private Case[][] createNewTableauCases() 

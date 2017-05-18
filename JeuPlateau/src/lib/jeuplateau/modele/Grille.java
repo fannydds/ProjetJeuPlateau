@@ -64,6 +64,7 @@ public class Grille {
         {
             for (int j = 0; j < tabCasePiece[0].length; j++) 
             {
+                if(p.getTableauCases()[i][j] != null)
                 this.tableauCase[p.getPositionPiece().getX()+i][p.getPositionPiece().getY()+j] = p.getTableauCases()[i][j];
             }
         }
