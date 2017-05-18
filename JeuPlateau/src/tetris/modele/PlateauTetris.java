@@ -112,10 +112,10 @@ public class PlateauTetris extends Plateau {
                               }
                               System.out.println("nouvelle piece 1");
                               getGrille().ajoutPiece(getPieceCourante());
-                              ligneComplete();
                               setChanged();
                               notifyObservers();
                               clearChanged();
+                              ligneComplete();
                               getNewPieceCourante();
                               
                               nvellePiece =true;
@@ -130,10 +130,10 @@ public class PlateauTetris extends Plateau {
                             }
                             System.out.println("nouvelle piece 2");
                             getGrille().ajoutPiece(getPieceCourante());
-                            ligneComplete();
                             setChanged();
                             notifyObservers();
                             clearChanged();
+                            ligneComplete();
                             getNewPieceCourante();
                            
                             nvellePiece =true;
