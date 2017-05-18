@@ -49,7 +49,9 @@ public class PlateauTetrisController extends PlateauJeuController {
             System.out.println(".keyPressed() ok ");
             this.getPlateau().getGrille().ajoutPiece(pcourante);
             PlateauTetris p = (PlateauTetris) this.getPlateau();
+            p.ligneComplete();
             p.getNewPieceCourante();
+            
         }
         draw();
  

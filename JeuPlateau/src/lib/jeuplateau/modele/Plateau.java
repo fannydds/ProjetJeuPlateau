@@ -35,7 +35,10 @@ public class Plateau extends Observable{
     public Grille getGrille() {
         return grille;
     }
-    
+     
+    public void setGrille(Grille grille) {
+        this.grille = grille;
+    }
     public int getCol() {
         return col;
     }
