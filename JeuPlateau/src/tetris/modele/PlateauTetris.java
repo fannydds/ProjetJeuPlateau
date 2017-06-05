@@ -27,6 +27,8 @@ public class PlateauTetris extends Plateau {
     public final static int NB_COLS = 10;
     public final static int NB_ROWS = 16;
     
+    private boolean gameOver = false;
+    
     
     public PlateauTetris() 
     {
@@ -108,6 +110,7 @@ public class PlateauTetris extends Plateau {
                               nvellePiece =false;
                          }else{
                               if(nvellePiece){
+                                  gameOver = true;
                                   cancel();
                               }
                               System.out.println("nouvelle piece 1");
@@ -142,6 +145,12 @@ public class PlateauTetris extends Plateau {
                 
             }, 0,500);
     }
+
+    public boolean isGameOver() {
+        return gameOver;
+    }
+    
+    
     
    
 }

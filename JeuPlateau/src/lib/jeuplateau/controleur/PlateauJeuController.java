@@ -39,12 +39,17 @@ public class PlateauJeuController implements Initializable, Observer{
     @FXML
     private GridPane grilleGridPane;
     
+    @FXML
+    private Label lblScore;
+    
     private int numCols;
     private int numRows;
     
     private Plateau plateau;
     
+    @FXML
     Button btStart;
+    
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {} 
@@ -73,11 +78,19 @@ public class PlateauJeuController implements Initializable, Observer{
 //        
 //       plateau.setPieceCourante(p1);
 
+       Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                btStart.setDisable(false);
+            }
+        });
+
+
         grilleGridPane.getRowConstraints().clear();
         grilleGridPane.getColumnConstraints().clear();
         
-////        grilleGridPane.setGridLinesVisible(true);
         
+        this.lblScore.setText(this.plateau.getScore().getScore()+"");
 
         System.out.println(grilleGridPane.getColumnConstraints());
         for (int i = 0; i < numRows; i++) {
@@ -102,7 +115,9 @@ public class PlateauJeuController implements Initializable, Observer{
     @FXML
     public void handleOnActionStart(ActionEvent event) 
     {
-        plateau.startGame();
+       plateau.startGame();
+       Button b = (Button) event.getSource();
+       b.setDisable(true);
     }
     
     @FXML
@@ -160,6 +175,13 @@ public class PlateauJeuController implements Initializable, Observer{
                 }
             }
         }
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                lblScore.setText(plateau.getScore().getScore()+"");
+            }
+        });
+        
     }
     
     public Node getNodeByRowColumnIndex (final int row, final int column, GridPane gridPane) {
@@ -205,6 +227,11 @@ public class PlateauJeuController implements Initializable, Observer{
     public void update(Observable o, Object arg) {
         draw();
     }
+
+    public Label getLblScore() {
+        return lblScore;
+    }
+    
     
     
 }

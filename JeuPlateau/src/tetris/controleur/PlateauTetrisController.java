@@ -5,9 +5,16 @@
  */
 package tetris.controleur;
 
+import java.util.Observable;
+import java.util.Optional;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.ButtonType;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.stage.Stage;
 import lib.jeuplateau.controleur.PlateauJeuController;
 import lib.jeuplateau.modele.Piece;
 import lib.jeuplateau.modele.Translation;
@@ -60,6 +67,37 @@ public class PlateauTetrisController extends PlateauJeuController {
         draw();
  
     }
+
+    @Override
+    public void update(Observable o, Object arg) {
+        PlateauTetris p = (PlateauTetris)o;
+        if(!p.isGameOver()){
+            super.update(o, arg);
+        }else{
+            Platform.runLater(new Runnable() {
+                @Override
+                public void run() {
+                    Alert alert = new Alert(AlertType.INFORMATION);
+                    alert.setTitle("Game Over");
+                    alert.setHeaderText("Game Over");
+                    alert.setContentText("Your score : " + getLblScore().getText());
+
+                    
+                    Optional<ButtonType> result = alert.showAndWait();
+                    Stage s  = (Stage) getLblScore().getScene().getWindow();
+                    s.close();
+
+
+                }
+            });
+            
+            
+        }
+        
+    }
+    
+    
+    
     
 
     
