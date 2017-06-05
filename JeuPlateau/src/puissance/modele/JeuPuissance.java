@@ -66,13 +66,13 @@ public class JeuPuissance extends Application {
         controller.initGrilleGridPane(plateau);
         
          stage.setResizable(false);
-         stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
-            @Override
-            public void handle(WindowEvent t) {
-                Platform.exit();
-                System.exit(0);
-            }
-});
+//         stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
+//            @Override
+//            public void handle(WindowEvent t) {
+//                Platform.exit();
+//                System.exit(0);
+//            }
+//});
         
         stage.show();
         
