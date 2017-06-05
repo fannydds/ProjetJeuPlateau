@@ -90,7 +90,7 @@
                   </BorderPane>
                   <BorderPane prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="1">
                      <bottom>
-                        <Label text="JEU 3" BorderPane.alignment="CENTER">
+                        <Label text="NEW GAME COMMING SOON" BorderPane.alignment="CENTER">
                            <font>
                               <Font size="24.0" />
                            </font>
@@ -102,7 +102,14 @@
                      <center>
                         <AnchorPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
                            <children>
-                              <Button layoutX="224.0" layoutY="122.0" mnemonicParsing="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                              <Button layoutX="224.0" layoutY="122.0" mnemonicParsing="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                 <graphic>
+                                    <ImageView fitHeight="239.0" fitWidth="461.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@img/workinprogess.png" />
+                                       </image>
+                                    </ImageView>
+                                 </graphic></Button>
                            </children>
                         </AnchorPane>
                      </center>
