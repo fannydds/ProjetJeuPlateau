@@ -5,12 +5,18 @@
  */
 package puissance.controleur;
 
+import java.util.Observable;
+import java.util.Optional;
+import javafx.application.Platform;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.stage.Stage;
 import lib.jeuplateau.controleur.PlateauJeuController;
 import lib.jeuplateau.modele.Piece;
 import lib.jeuplateau.modele.Translation;
-import tetris.modele.PlateauTetris;
+import puissance.modele.PlateauPuissance;
 
 /**
  *
@@ -42,8 +48,8 @@ public class  PlateauPuissanceController extends PlateauJeuController{
         if(!res && !keyCode.equals(keyCode.UP)){
             System.out.println(".keyPressed() ok ");
             this.getPlateau().getGrille().ajoutPiece(pcourante);
-            PlateauTetris p = (PlateauTetris) this.getPlateau();
-            p.ligneComplete();
+            PlateauPuissance p = (PlateauPuissance) this.getPlateau();
+            p.isAligne4Pieces();
             p.getNewPieceCourante();
             
         }
@@ -51,5 +57,42 @@ public class  PlateauPuissanceController extends PlateauJeuController{
  
     }
     
+ @Override
+    public void update(Observable o, Object arg) {
+        PlateauPuissance p = (PlateauPuissance)o;
+        if(!p.isGameOver() && !p.isWin()){
+            super.update(o, arg);
+        }else if(p.isGameOver()){
+            Platform.runLater(new Runnable() {
+                @Override
+                public void run() {
+                    Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                    alert.setTitle("Game Over");
+                    alert.setHeaderText("Game Over");
+//                    alert.setContentText("Your score : " + getLblScore().getText());
 
+                    
+                    Optional<ButtonType> result = alert.showAndWait();
+                    Stage s  = (Stage) getLblScore().getScene().getWindow();
+                    s.close();
+                }
+            });
+            
+        }
+        else{
+            
+            Platform.runLater(new Runnable() {
+                @Override
+                public void run() {
+                    Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                    alert.setTitle("Gagné");
+                    alert.setHeaderText("Gagné");
+                    Optional<ButtonType> result = alert.showAndWait();
+                    Stage s  = (Stage) getLblScore().getScene().getWindow();
+                    s.close();
+                }
+            });
+            
+        }
+    }       
 }
