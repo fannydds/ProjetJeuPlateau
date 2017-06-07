@@ -42,7 +42,6 @@
                         <Insets top="40.0" />
                      </VBox.margin>
                   </Button>
-                  <Button mnemonicParsing="false" prefHeight="31.0" prefWidth="106.0" text="Pause" />
                </children>
                <BorderPane.margin>
                   <Insets />

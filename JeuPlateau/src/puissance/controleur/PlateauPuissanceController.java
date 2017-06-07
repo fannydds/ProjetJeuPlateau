@@ -13,6 +13,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.GridPane;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 import lib.jeuplateau.controleur.PlateauJeuController;
@@ -29,16 +30,21 @@ public class PlateauPuissanceController extends PlateauJeuController {
 
     public PlateauPuissanceController() {
     }
-
-    public void keyPressed(KeyEvent e) throws CloneNotSupportedException {
+@Override
+public void keyPressed(KeyEvent e) throws CloneNotSupportedException {
         KeyCode keyCode = e.getCode();
         Piece pcourante = this.getPlateau().getPieceCourante();
         boolean res = true;
         try {
             switch (keyCode) {
                 case DOWN:
-                    res = pcourante.translate(Translation.Bas, this.getPlateau().getGrille());
-                    
+                    try {
+                        while (res) {   
+                            res = pcourante.translate(Translation.Bas, this.getPlateau().getGrille());
+                        } 
+                    } catch (ArrayIndexOutOfBoundsException er) {
+                            res = false;
+                    }                
                     break;
                 case LEFT:
                     res = pcourante.translate(Translation.Gauche, this.getPlateau().getGrille());
@@ -46,18 +52,18 @@ public class PlateauPuissanceController extends PlateauJeuController {
                 case RIGHT:
                     res = pcourante.translate(Translation.Droite, this.getPlateau().getGrille());
                     break;
+            } 
+            if (!res && !keyCode.equals(keyCode.UP)) {
+                System.out.println(".keyPressed() ok ");
+                this.getPlateau().getGrille().ajoutPiece(pcourante);
+                PlateauPuissance p = (PlateauPuissance) this.getPlateau();
+                p.isAligne4Pieces();
+                p.getNewPieceCourante();
+
             }
-        } catch (ArrayIndexOutOfBoundsException err) {
-
+        } catch (ArrayIndexOutOfBoundsException err) { 
         }
-        if (!res && !keyCode.equals(keyCode.UP)) {
-            System.out.println(".keyPressed() ok ");
-            this.getPlateau().getGrille().ajoutPiece(pcourante);
-            PlateauPuissance p = (PlateauPuissance) this.getPlateau();
-            p.isAligne4Pieces();
-            p.getNewPieceCourante();
-
-        }
+        
         draw();
 
     }
@@ -72,7 +78,6 @@ public class PlateauPuissanceController extends PlateauJeuController {
                 Alert alert = new Alert(Alert.AlertType.INFORMATION);
                 alert.setTitle("Game Over");
                 alert.setHeaderText("Game Over");
-//                    alert.setContentText("Your score : " + getLblScore().getText());
                 Optional<ButtonType> result = alert.showAndWait();
                 Stage s = (Stage) getLblScore().getScene().getWindow();
                 s.close();
@@ -109,6 +114,9 @@ public class PlateauPuissanceController extends PlateauJeuController {
             
         });
     }
+
+    
+    
     
     
 }

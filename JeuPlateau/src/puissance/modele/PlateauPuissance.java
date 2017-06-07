@@ -22,7 +22,7 @@ import lib.jeuplateau.modele.Translation;
 public class PlateauPuissance extends Plateau{
 
     public final static int NB_COLS = 7;
-    public final static int NB_ROWS = 6;
+   public final static int NB_ROWS = 6;
     
     public boolean couleur = true;
     private boolean gameOver = false;
@@ -107,70 +107,24 @@ public class PlateauPuissance extends Plateau{
                 this.gagnant += gagner(c1,c2,c3,c4);
             }
         }
-        if(!"".equals(this.gagnant))
-            this.win=true;
+        if(!"".equals(this.gagnant)){
+           this.win=true;
+            
+            setChanged();
+            notifyObservers();
+            clearChanged(); 
+        }
         System.out.println("aaa"+this.gagnant);
+            
     }
     
     @Override
     public void startGame(){
             getNewPieceCourante();
-            
-            Timer t = new Timer();
-            
-            t.scheduleAtFixedRate(new TimerTask() {
-                boolean nvellePiece = false;
-                @Override
-                public void run() {
-                        
-                          System.out.println(".run() ");
-                              try {
-                                if(getPieceCourante().translate(Translation.Bas, getGrille())){
-                                     setChanged();
-                                     notifyObservers();
-                                     clearChanged();
-                                     nvellePiece =false;
-                                }else{
-                                     if(nvellePiece){
-                                         cancel();
-                                     }
-                                     System.out.println("nouvelle piece 1");
-                                     getGrille().ajoutPiece(getPieceCourante());
-                                     setChanged();
-                                     notifyObservers();
-                                     clearChanged();
-                                     getNewPieceCourante();
+            setChanged();
+            notifyObservers();
+            clearChanged();
 
-                                     nvellePiece =true;
-                                 }
-
-
-                               }catch (ArrayIndexOutOfBoundsException e){
-                                   if(nvellePiece){
-                                         cancel();
-                                   }
-                                   System.out.println("nouvelle piece 2");
-                                   getGrille().ajoutPiece(getPieceCourante());
-                                   setChanged();
-                                   notifyObservers();
-                                   clearChanged();
-                                   getNewPieceCourante();
-
-                                   nvellePiece =true;
-                               } catch (CloneNotSupportedException ex) {
-                        Logger.getLogger(PlateauPuissance.class.getName()).log(Level.SEVERE, null, ex);
-                    } finally {
-                                  if(win || gameOver){
-                                      setChanged();
-                                      notifyObservers();
-                                      cancel();
-                                  }
-                              }
-
-                              
-                        }
-                
-            }, 0,500);
     }
 
     public boolean isGameOver() {
