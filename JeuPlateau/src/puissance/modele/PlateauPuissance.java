@@ -27,6 +27,7 @@ public class PlateauPuissance extends Plateau{
     public boolean couleur = true;
     private boolean gameOver = false;
     private boolean win = false;
+    private String gagnant = "";
     
     public PlateauPuissance() 
     {
@@ -46,7 +47,6 @@ public class PlateauPuissance extends Plateau{
     
     public void isAligne4Pieces()
     {
-        String gagnant="";
         Case[][] tab = this.getGrille().getTableauCase();
         
         //  Alignement horizontaux
@@ -62,7 +62,7 @@ public class PlateauPuissance extends Plateau{
                 if(tab[i][j+1]!=null) c2 = tab[i][j+1].getColor();
                 if(tab[i][j+2]!=null) c3 = tab[i][j+2].getColor();
                 if(tab[i][j+3]!=null) c4 = tab[i][j+3].getColor();
-                gagnant += gagner(c1,c2,c3,c4);
+                this.gagnant += gagner(c1,c2,c3,c4);
             }
         }
         // Alignements verticaux
@@ -76,7 +76,7 @@ public class PlateauPuissance extends Plateau{
                 if(tab[i+1][j]!=null) c2 = tab[i+1][j].getColor();
                 if(tab[i+2][j]!=null) c3 = tab[i+2][j].getColor();
                 if(tab[i+3][j]!=null) c4 = tab[i+3][j].getColor();
-                gagnant += gagner(c1,c2,c3,c4);
+                this.gagnant += gagner(c1,c2,c3,c4);
             }
         }
 //        Diagonales montantes
@@ -90,7 +90,7 @@ public class PlateauPuissance extends Plateau{
                 if(tab[i+1][j+1]!=null) c2 = tab[i+1][j+1].getColor();
                 if(tab[i+2][j+2]!=null) c3 = tab[i+2][j+2].getColor();
                 if(tab[i+3][j+3]!=null) c4 = tab[i+3][j+3].getColor();
-                gagnant += gagner(c1,c2,c3,c4);
+                this.gagnant += gagner(c1,c2,c3,c4);
             }
         }
 //        Diagonales descendantes
@@ -104,12 +104,12 @@ public class PlateauPuissance extends Plateau{
                 if(tab[i+1][j-1]!=null) c2 = tab[i+1][j-1].getColor();
                 if(tab[i+2][j-2]!=null) c3 = tab[i+2][j-2].getColor();
                 if(tab[i+3][j-3]!=null) c4 = tab[i+3][j-3].getColor();
-                gagnant += gagner(c1,c2,c3,c4);
+                this.gagnant += gagner(c1,c2,c3,c4);
             }
         }
-        if(!"".equals(gagnant))
+        if(!"".equals(this.gagnant))
             this.win=true;
-        System.out.println("aaa"+gagnant);
+        System.out.println("aaa"+this.gagnant);
     }
     
     @Override
@@ -122,44 +122,53 @@ public class PlateauPuissance extends Plateau{
                 boolean nvellePiece = false;
                 @Override
                 public void run() {
-                        try {
+                        
                           System.out.println(".run() ");
-                          if(getPieceCourante().translate(Translation.Bas, getGrille())){
-                              setChanged();
-                              notifyObservers();
-                              clearChanged();
-                              nvellePiece =false;
-                         }else{
-                              if(nvellePiece){
-                                  cancel();
-                              }
-                              System.out.println("nouvelle piece 1");
-                              getGrille().ajoutPiece(getPieceCourante());
-                              setChanged();
-                              notifyObservers();
-                              clearChanged();
-                              getNewPieceCourante();
-                              
-                              nvellePiece =true;
-                          }
-                          
+                              try {
+                                if(getPieceCourante().translate(Translation.Bas, getGrille())){
+                                     setChanged();
+                                     notifyObservers();
+                                     clearChanged();
+                                     nvellePiece =false;
+                                }else{
+                                     if(nvellePiece){
+                                         cancel();
+                                     }
+                                     System.out.println("nouvelle piece 1");
+                                     getGrille().ajoutPiece(getPieceCourante());
+                                     setChanged();
+                                     notifyObservers();
+                                     clearChanged();
+                                     getNewPieceCourante();
 
-                        } catch (CloneNotSupportedException ex ) {
-                            Logger.getLogger(PlateauPuissance.class.getName()).log(Level.SEVERE, null, ex);
-                        } catch (ArrayIndexOutOfBoundsException e){
-                            if(nvellePiece){
-                                  cancel();
-                            }
-                            System.out.println("nouvelle piece 2");
-                            getGrille().ajoutPiece(getPieceCourante());
-                            setChanged();
-                            notifyObservers();
-                            clearChanged();
-                            getNewPieceCourante();
-                           
-                            nvellePiece =true;
+                                     nvellePiece =true;
+                                 }
+
+
+                               }catch (ArrayIndexOutOfBoundsException e){
+                                   if(nvellePiece){
+                                         cancel();
+                                   }
+                                   System.out.println("nouvelle piece 2");
+                                   getGrille().ajoutPiece(getPieceCourante());
+                                   setChanged();
+                                   notifyObservers();
+                                   clearChanged();
+                                   getNewPieceCourante();
+
+                                   nvellePiece =true;
+                               } catch (CloneNotSupportedException ex) {
+                        Logger.getLogger(PlateauPuissance.class.getName()).log(Level.SEVERE, null, ex);
+                    } finally {
+                                  if(win || gameOver){
+                                      setChanged();
+                                      notifyObservers();
+                                      cancel();
+                                  }
+                              }
+
+                              
                         }
-                }
                 
             }, 0,500);
     }
@@ -171,6 +180,7 @@ public class PlateauPuissance extends Plateau{
     public boolean isWin() {
         return win;
     }
+    
 
     private String gagner(Color c1,Color c2,Color c3,Color c4) 
     {
@@ -187,5 +197,12 @@ public class PlateauPuissance extends Plateau{
         }
         return str;
     }
+
+    public String getGagnant() {
+        return gagnant;
+    }
+    
+    
+    
     
 }

@@ -231,6 +231,10 @@ public class PlateauJeuController implements Initializable, Observer{
     public Label getLblScore() {
         return lblScore;
     }
+
+    public GridPane getGrilleGridPane() {
+        return grilleGridPane;
+    }
     
     
     

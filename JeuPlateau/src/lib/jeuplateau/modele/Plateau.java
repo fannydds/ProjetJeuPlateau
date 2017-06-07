@@ -23,6 +23,10 @@ public class Plateau extends Observable{
     private int row;
     
     private Piece pieceCourante;
+    
+    private Translation lastTranslate;
+    
+    private boolean lastTranslateOk;
 
     public void setPieceCourante(Piece pieceCourante) {
         this.pieceCourante = pieceCourante;
@@ -33,6 +37,7 @@ public class Plateau extends Observable{
         this.col = col;
         this.row = row;
         this.grille = new Grille(this.row, this.col);
+        this.lastTranslateOk = true;
     }
 
     public Grille getGrille() {
@@ -76,4 +81,6 @@ public class Plateau extends Observable{
     public void pause() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
+    
+    
 }

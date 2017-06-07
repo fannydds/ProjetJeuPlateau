@@ -20,7 +20,7 @@ import javafx.stage.WindowEvent;
 public class PlateformeJeuMain extends Application {
     
 
-     @Override
+    @Override
     public void start(Stage stage) throws Exception {
         
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/PlateformeJeu/PlateformeJeuVue.fxml"));

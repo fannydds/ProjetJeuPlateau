@@ -20,6 +20,7 @@ public class Piece  implements Cloneable
 
     //position de la piece en haut a gauche
     private Position positionPiece;
+    private Translation lastTranslate;
     
     
     //Une piece est composee d un tableau de cases 
@@ -120,6 +121,7 @@ public class Piece  implements Cloneable
                     if((cases[pos1.getX()][pos1.getY()] != null) 
                             && (tab[k][l] != null)){
                         return true;
+                        
                     }
                 
             }
@@ -172,4 +174,17 @@ public class Piece  implements Cloneable
             int row = this.tableauCases.length;
 		return new Case[col][row];
 	}
+        
+        
+    public Translation getLastTranslate() {
+        return lastTranslate;
+    }
+
+    public void setLastTranslate(Translation lastTranslate) {
+        this.lastTranslate = lastTranslate;
+    }
+
+
 }
+
+

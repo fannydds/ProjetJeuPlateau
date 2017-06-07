@@ -22,11 +22,11 @@ public class PiecePuissance  extends Piece{
     }
 
     public static PiecePuissance getJaune() {
-        return new PiecePuissance(new Case[][]{ {new Case(Color.YELLOW) } }, new Position(0, 5));
+        return new PiecePuissance(new Case[][]{ {new Case(Color.YELLOW) } }, new Position(0, 3));
     }
     
     public static PiecePuissance getRouge() {
-        return new PiecePuissance(new Case[][]{ {new Case(Color.RED) } }, new Position(0, 5));
+        return new PiecePuissance(new Case[][]{ {new Case(Color.RED) } }, new Position(0, 3));
     }
     
     public static PiecePuissance getPiece(boolean couleur) {
